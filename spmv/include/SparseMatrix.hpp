@@ -10,6 +10,7 @@ namespace SpMV
     // Enumerations for matrix state to support Builder Pattern
     enum MatrixState { undefined, initialized, building, assembled };
 
+    template <class fp_type>
     class SparseMatrix
     {
     protected: 
@@ -23,10 +24,11 @@ namespace SpMV
         SparseMatrix(const int nrows, const int ncols);
        ~SparseMatrix();
 
-       void setCoefficient(const size_t row, const size_t col, const double aij);
+       void setCoefficient(const size_t row, const size_t col, const fp_type aij);
     };
 
-    SparseMatrix::SparseMatrix(const int nrows, const int ncols) :
+    template <class fp_type>
+    SparseMatrix<fp_type>::SparseMatrix(const int nrows, const int ncols) :
         _nrows(nrows), _ncols(ncols)
     {
         assert(this->_state == undefined);
@@ -37,12 +39,14 @@ namespace SpMV
         assert(this->_state == initialized);
     }
 
-    SparseMatrix::~SparseMatrix()
+    template <class fp_type>
+    SparseMatrix<fp_type>::~SparseMatrix()
     {
         std::cout << "Hello from SparseMatrix Destructor!" << std::endl;
     }
 
-    void SparseMatrix::setCoefficient(const size_t row, const size_t col, const double aij)
+    template <class fp_type>
+    void SparseMatrix<fp_type>::setCoefficient(const size_t row, const size_t col, const fp_type aij)
     {
         assert(this->_state != undefined);
 
@@ -50,6 +54,7 @@ namespace SpMV
 
         //Store value
         //Increment nnz
+        std::cout << "i,j,aij" << row << "," << col << "," << aij << std::endl;
 
         assert(this->_state == building);
     }

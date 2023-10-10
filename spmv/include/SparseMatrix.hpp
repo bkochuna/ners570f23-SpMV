@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SPMV570_
+#define _SPMV570_
 
 #include <cstddef>
 #include <cassert>
@@ -53,3 +54,5 @@ namespace SpMV
         assert(this->_state == building);
     }
 }
+
+#endif

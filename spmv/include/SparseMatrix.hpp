@@ -34,6 +34,7 @@ namespace SpMV
         inline MatrixState getState()       const { return _state; };
 
         void setCoefficient(const size_t row, const size_t col, const fp_type aij);
+        virtual void assembleStorage() =0;
     };
 
 }

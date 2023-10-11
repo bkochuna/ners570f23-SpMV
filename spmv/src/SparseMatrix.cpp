@@ -27,12 +27,14 @@ namespace SpMV
     void SparseMatrix<fp_type>::setCoefficient(const size_t row, const size_t col, const fp_type aij)
     {
         assert(this->_state != undefined);
+        assert(col < this->_ncols);
+        assert(row < this->_nrows);
 
         this->_state = building;
 
         //Store value
-        //Update nnz
-        // how do we use _buildCoeff
+        this->_buildCoeff[std::make_pair(row,col)] = aij;
+        this->_nnz = this->_buildCoeff.size();
 
         std::cout << "i,j,aij    " << row << "," << col << "," << aij << std::endl;
 

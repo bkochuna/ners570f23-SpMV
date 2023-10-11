@@ -24,7 +24,12 @@ namespace SpMV
         SparseMatrix(const int nrows, const int ncols);
        ~SparseMatrix();
 
-       void setCoefficient(const size_t row, const size_t col, const fp_type aij);
+        void setCoefficient(const size_t row, const size_t col, const fp_type aij);
+
+        inline size_t      getNumRows()     const { return _nrows; };
+        inline size_t      getNumCols()     const { return _ncols; };
+        inline size_t      getNumNonZeros() const { return _nnz;   };
+        inline MatrixState getState()       const { return _state; };
     };
 
     template <class fp_type>

@@ -31,7 +31,9 @@ namespace SpMV
         this->_state = building;
 
         //Store value
-        //Increment nnz
+        //Update nnz
+        // how do we use _buildCoeff
+
         std::cout << "i,j,aij    " << row << "," << col << "," << aij << std::endl;
 
         assert(this->_state == building);

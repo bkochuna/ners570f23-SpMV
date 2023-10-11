@@ -3,6 +3,9 @@
 
 #include <cstddef>
 #include <cassert>
+#include <map>
+#include <utility>
+
 
 namespace SpMV
 {
@@ -18,6 +21,8 @@ namespace SpMV
         size_t _nnz   = 0;
 
         MatrixState _state = undefined;
+
+        std::map<std::pair<size_t, size_t>, fp_type> _buildCoeff;
 
     public:
         SparseMatrix(const int nrows, const int ncols);

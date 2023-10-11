@@ -3,7 +3,6 @@
 
 #include <cstddef>
 #include <cassert>
-#include <iostream>
 
 namespace SpMV
 {
@@ -32,23 +31,6 @@ namespace SpMV
         inline MatrixState getState()       const { return _state; };
     };
 
-    template <class fp_type>
-    SparseMatrix<fp_type>::SparseMatrix(const int nrows, const int ncols) :
-        _nrows(nrows), _ncols(ncols)
-    {
-        assert(this->_state == undefined);
-        std::cout << "Hello from SparseMatrix Constructor!" << std::endl;
-        std::cout << "Size is (nrows,ncols) = (" 
-            << this->_nrows << "," << this->_ncols << ")" << std::endl;
-        this->_state = initialized;
-        assert(this->_state == initialized);
-    }
-
-    template <class fp_type>
-    SparseMatrix<fp_type>::~SparseMatrix()
-    {
-        std::cout << "Hello from SparseMatrix Destructor!" << std::endl;
-    }
 }
 
 #endif

@@ -1,3 +1,8 @@
+// Set FP type for test
+#ifndef __SPMV_FPTYPE__
+#define __SPMV_FPTYPE__ float
+#endif
+
 // Testing library required for testing
 #include "unit_test_framework.hpp"
 
@@ -22,7 +27,7 @@
  * Some examples are provided below
  */
 
-#define fp_type float
+
 
 // Create a unit test
 TEST(vectorTest) {

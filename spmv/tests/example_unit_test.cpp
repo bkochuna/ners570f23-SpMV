@@ -65,7 +65,7 @@ TEST_CASE(subtraction) {
   T const a = 3;
   T const b = 2;
   T const c = 1;
-  ASSERT(a - b == c);
+  ASSERT(a - b != c);
 }
 
 template <size_t N, typename T>

@@ -23,8 +23,8 @@ TEST_CASE(compareVectors) {
   }
   
   // Repeat for floating point numbers
-  std::vector<double> x = {1, 2, 3};
-  std::vector<double> y = {1, 2, 3.00001};
+  std::vector<fp_type> x = {1, 2, 3};
+  std::vector<fp_type> y = {1, 2, 3.00001};
 
   // One should avoid floating point equality comparisons due to rounding errors
   // We will briefly turn off compiler warnings about this to demonstrate why
@@ -40,71 +40,16 @@ TEST_CASE(compareVectors) {
 
   // Instead, we can test if the numbers are within a small epsilon of each
   // other
+  auto const epsilon = static_cast<fp_type>(1e-3); 
   for (size_t i = 0; i < x.size(); ++i) {
-    ASSERT_NEAR(x[i], y[i], 1e-3); 
+    ASSERT_NEAR(x[i], y[i], epsilon); 
   }
 }
 
-// Create a test suite
-TEST_SUITE(my_suite) {
-  // Run the unit test when the suite is run
-  TEST(compareVectors);
-}
-
-// We can also create templated tests and suites
-template <typename T>
-TEST_CASE(addition) {
-  T const a = 1;
-  T const b = 2;
-  T const c = 3;
-  ASSERT(a + b == c);
-}
-
-template <typename T>
-TEST_CASE(subtraction) {
-  T const a = 3;
-  T const b = 2;
-  T const c = 1;
-  ASSERT(a - b == c);
-}
-
-template <size_t N, typename T>
-TEST_CASE(fixed_size_dot_product) {
-  // Create an array of N 1's and an array of N 2's
-  T a[N]; 
-  T b[N];
-  for (size_t i = 0; i < N; ++i) {
-    a[i] = 1;
-    b[i] = 2;
-  }
-  // Compute the dot product
-  T dot = 0;
-  for (size_t i = 0; i < N; ++i) {
-    dot += a[i] * b[i];
-  }
-  // Compare to the solution
-  T const soln = 2 * N;
-  ASSERT(dot == soln);
-}
-
-template <typename T>
-TEST_SUITE(add_sub_suite) {
-  TEST(addition<T>);
-  TEST(subtraction<T>);
-  // Use parentheses to pass a function with multiple template arguments
-  // This is necessary because a comma is used to separate arguments in a
-  // template argument list as well as arguments to a macro
-  TEST((fixed_size_dot_product<3, T>));
-  TEST((fixed_size_dot_product<4, T>));
-}
-
-auto
-main() -> int
+int main()
 {
   // Run the unit tests. If a test fails, the program will print failure info
   // and return 1.
-  RUN_SUITE(my_suite);
-  RUN_SUITE(add_sub_suite<int>);
-  RUN_SUITE(add_sub_suite<size_t>);
+  TEST(compareVectors);
   return 0; 
 }

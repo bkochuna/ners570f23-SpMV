@@ -16,7 +16,6 @@ string(CONCAT GNU_WARNING_FLAGS
     " -Wsuggest-attribute=pure"
     " -Wundef"
     " -Wunused"
-    " -Wuseless-cast"
     " -Wvla"
     " -Wzero-as-null-pointer-constant"
     " -pedantic"

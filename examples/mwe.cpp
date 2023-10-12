@@ -3,7 +3,11 @@
 
 using namespace std;
 
-int main(int argc, char* argv[])
+// Traditionally, main takes two arguments: argc and argv.
+// These are the number of command line arguments and the arguments themselves.
+// int main(int argc, char* argv[])
+// However, we don't need them for this example.
+int main()
 {
   cout << "Hello World!" << endl;
 

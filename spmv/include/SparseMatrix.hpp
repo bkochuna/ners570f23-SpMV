@@ -16,8 +16,8 @@ namespace SpMV
     class SparseMatrix
     {
     protected: 
-        size_t _ncols = 0;
         size_t _nrows = 0;
+        size_t _ncols = 0;
         size_t _nnz   = 0;
 
         MatrixState _state = undefined;
@@ -26,7 +26,7 @@ namespace SpMV
 
     public:
         SparseMatrix(const int nrows, const int ncols);
-       ~SparseMatrix();
+        virtual ~SparseMatrix();
 
         inline size_t      getNumRows()     const { return _nrows; };
         inline size_t      getNumCols()     const { return _ncols; };

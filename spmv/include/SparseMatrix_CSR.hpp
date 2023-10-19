@@ -1,3 +1,6 @@
+#ifndef __SPMV570_CSR__
+#define __SPMV570_CSR__
+
 #pragma once
 
 #include "SparseMatrix.hpp"
@@ -9,15 +12,20 @@ namespace SpMV
     class SparseMatrix_CSR : public SparseMatrix<fp_type>
     {
     private:
-        size_t *I    = nullptr;
-        size_t *J    = nullptr;
-        fp_type *val = nullptr;
-        string format = nullptr;
+        // Default Constructor
+        size_t *rowPtrs   = nullptr;
+        size_t *colIdx    = nullptr;
+        fp_type *value    = nullptr;
+        // string format = "CSR";
 
     public:
-        SparseMatrix_COO(const int nrows, const int ncols);
+        // Constructor that takes arguments
+        SparseMatrix_CSR(const int nrows, const int ncols);
+        void setCoefficient(const size_t row, const size_t col, const fp_type aij);
         void assembleStorage() {};
-        void getCoef(size_t i,size_t j);
-        string getFormat();
+        // void getCoef(size_t i, size_t j, fp_type & Val);
+        // string getFormat();
     };
 }
+
+#endif

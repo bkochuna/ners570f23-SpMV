@@ -1,6 +1,7 @@
 #include "SparseMatrix_ELL.hpp"
 
 #include<iostream>
+#include<stdexcept>
 
 namespace SpMV
 {
@@ -20,21 +21,47 @@ namespace SpMV
     }
 
     template <class fp_type>
-    void SparseMatrix_ELL<fp_type>::setCoefficient(const size_t row, const size_t col, const fp_type aij){
+    fp_type SparseMatrix_ELL<fp_type>::getCoefficient(const size_t row,const size_t col){
+        // This function gets a matrix coefficient value given the row and 
+        // column indices. It does this by accessing the sparse storage format.
+        // Thus, the sparse storage format must be built in order for this 
+        // method to function.
 
-        // First call the sefCoeff from SparseMatrix
-        SparseMatrix<fp_type>::setCoefficient(row,col,aij);
+        if(_state!=assembled){
+            throw std::exception("Matrix must be assembled before its values are accessed");
+        }
 
-        // Now assign the entry to colIdx and val
-        for (size_t i = 0; i < this->_nrowsmax; i++)
-        {
-            if(colIdx[this->_nrows*i+row]==-1){
-                colIdx[this->_nrows*i+row]=col;
-                val[this->_nrows*i+row]=aij;
-                break;
+        fp_type output = 0;
+        for (size_t i=0;i<_nrowsmax;i++){
+            if(colIdx[_nrows*i+row]==col){
+                output = val[_nrows*i+row];
             }
-        }  
-    }   
+        }
+        return output;
+    }
+
+    template <class fp_type>
+    size_t SparseMatrix_ELL<fp_type>::getLongestRow(){
+        size_t count = 0;
+        size_t max_count = 0;
+
+        // need ot iterate through map entries but unsure how.
+        // https://stackoverflow.com/questions/26281979/c-loop-through-map
+        // https://cplusplus.com/reference/utility/pair/pair/
+        for (int i=0; i<_nrows;i++){
+            _buildCoeff::iterator j
+            for (j=symbolTable.begin(); j!=symbolTable.end(); j++){
+                size_t rowidx= j->first->first; //should be the rowidx for jth entry
+                if (i==rowidx){
+                    count++;
+                }
+            }
+            if (max_count<count){
+                max_count = count;
+            }
+            count = 0;
+    }
+    }
 
     template class SparseMatrix_ELL<float>;
     template class SparseMatrix_ELL<double>;

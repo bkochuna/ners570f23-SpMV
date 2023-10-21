@@ -14,13 +14,14 @@ namespace SpMV
         size_t *colIdx = nullptr;
         fp_type *val = nullptr;
         size_t _nrowsmax; // A function to find the value of nrowsmax need to be implemented
-        //string format = "ELL";
+        string _format = "ELL";
+        size_t getLongestRow();
 
     public:
         SparseMatrix_ELL(const int nrows, const int ncols);
         void setCoefficient(const size_t row, const size_t col, const fp_type aij);
         void assembleStorage() {};
-        //void getCoef(size_t i,size_t j);
-        //string getFormat();
+        fp_type getCoefficient(size_t i,size_t j);
+        inline string getFormat() const { return _format; };
     };
 }

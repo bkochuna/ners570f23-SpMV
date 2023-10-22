@@ -1,7 +1,6 @@
 #include "SparseMatrix_COO.hpp"
 
 #include <iostream>
-#include <stdexcept>
 
 namespace SpMV
 {

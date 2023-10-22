@@ -19,9 +19,9 @@ namespace SpMV
         void matvec(fp_type* vecin, fp_type* vecout);
 
         // For destruction unit test
-        void getPointerI() {return I};
-        void getPointerJ() {return J};
-        void getPointerVal() {return val};
+        // size_t*  getPointerI()   const {return I;};
+        // size_t*  getPointerJ()   const {return J;};
+        // fp_type* getPointerVal() const {return val;};
     };
 }
 

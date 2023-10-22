@@ -35,6 +35,7 @@ namespace SpMV
 
         void setCoefficient(const size_t row, const size_t col, const fp_type aij);
         virtual void assembleStorage() =0;
+        virtual void matvec(fp_type* vecin, fp_type* vecout) =0;
     };
 
 }

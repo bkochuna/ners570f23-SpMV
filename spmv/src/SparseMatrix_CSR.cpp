@@ -70,6 +70,23 @@ namespace SpMV
         }
         std::cout << this->_nnz << std::endl;
     }
+
+    template <class fp_type>
+    void SparseMatrix_CSR<fp_type>::matvec(fp_type* vecin, fp_type* vecout){
+	//Previous Fortran Implementation:
+        //DO rownum = 1, numrows
+	////DO idx = rowPtrs(rownum),(rowPtrs(rownum+1)-1)
+	//////rhsvec(rownum) = rhsvec(rownum) + values(idx)*lhsvec(colIdx(idx))
+        ////END DO
+        //END DO
+		
+	//C++ Implementation:
+	for (size_t rownum = 0; rownum < this->nrows+1; rownum++){
+		for (size_t idx = this->rowPtrs[rownum]; idx < rowPtrs[rownum+1]; idx++){
+			vecout[rownum] = vecout[rownum] + (this->values[idx]*vecin[this->colIdx[idx]]);
+		}
+	}	
+    }
     
     template class SparseMatrix_CSR<float>;
     template class SparseMatrix_CSR<double>;

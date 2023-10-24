@@ -54,8 +54,7 @@ TEST_SUITE(my_suite) {
 auto
 main() -> int
 {
-  // Run the unit tests. If a test fails, the program will print failure info
-  // and return 1.
+  // Run the unit tests. If a test fails, the program will print failure info and return 1.
   RUN_SUITE(my_suite);
   return 0; 
 }

@@ -13,7 +13,7 @@ namespace SpMV
         // size_t *J    = nullptr;
         size_t *colIdx = nullptr;
         fp_type *val = nullptr;
-        size_t _nrowsmax; // A function to find the value of nrowsmax need to be implemented
+        size_t _nrowsmax; // the method getLongestRow() will return _nrowsmax
         string _format = "ELL";
         size_t getLongestRow();
 

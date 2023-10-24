@@ -13,7 +13,6 @@ namespace SpMV
         std::cout << "Hello from SparseMatrix_DEN Constructor!" << std::endl;
     }
 
-<<<<<<< HEAD
     //START DEN ACCESSOR METHODS
 
     //Returns matrix coefficient value at row and column indices i and j
@@ -84,8 +83,7 @@ namespace SpMV
     //END DEN ACCESSOR METHODS
 
 
-=======
->>>>>>> refs/remotes/origin/den
+
     template class SparseMatrix_DEN<float>;
     template class SparseMatrix_DEN<double>;
 }

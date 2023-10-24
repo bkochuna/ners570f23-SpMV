@@ -58,7 +58,7 @@ TEST_CASE(Uppertri) {
     std::string text_ref = "2.0 -2.0 12.0 \n -3.0 -12.5 0.0 \n -6.1 0.0 0.0";
 
     if (text == text_ref){
-        std::cerr << "Test passed" << std:endl;
+        std::cerr << "Test passed" << std::endl;
     } else {
         std::cerr << "Test failed" << std::endl;
         return 1;

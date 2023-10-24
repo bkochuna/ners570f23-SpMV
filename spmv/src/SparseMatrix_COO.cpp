@@ -9,11 +9,11 @@ namespace SpMV
          SparseMatrix<fp_type>::SparseMatrix(nrows, ncols)
     {
         std::cout << "Hello from SparseMatrix_COO Constructor!" << std::endl;
-        _nrows = nrows;
-        _ncols = ncols;
+        this->_nrows = nrows;
+        this->_ncols = ncols;
         _format = "COO";
         I = new size_t[this->_nnz];
-        J = new fp_type[this->_nnz];
+        J = new size_t[this->_nnz];
         val = new fp_type[this->_nnz];
     }
 

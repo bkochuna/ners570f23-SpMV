@@ -34,11 +34,6 @@ namespace SpMV
 
         //setter functions
         void setCoefficient(const size_t row, const size_t col, const fp_type aij);
-
-        // For destruction unit test
-        // size_t*  getPointerI()   const {return I;};
-        // size_t*  getPointerJ()   const {return J;};
-        // fp_type* getPointerVal() const {return val;};
     };
 }
 

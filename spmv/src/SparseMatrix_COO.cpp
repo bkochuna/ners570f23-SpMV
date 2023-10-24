@@ -63,7 +63,7 @@ namespace SpMV
         if(this->_state!=assembled){
             throw std::runtime_error("Matrix must be assembled before its values are accessed");
         }
-        if (col >= _ncols || row >= _nrows)
+        if (col >= this->_ncols || row >= this->_nrows)
         {
             std::cout << "Specified matrix indices are not within the bounds of the matrix" << std::endl;	
             exit(1);
@@ -84,13 +84,13 @@ namespace SpMV
         if(this->_state!=assembled){
             throw std::runtime_error("Matrix must be assembled before its values are accessed");
         }
-        if (col >= _ncols || row >= _nrows)
+        if (col >= this->_ncols || row >= this->_nrows)
         {
             std::cout << "Specified matrix indices are not within the bounds of the matrix" << std::endl;	
             exit(1);
         }
 
-        return _buildCoeff[{row , col}];
+        return this->_buildCoeff[{row , col}];
     }
 
     template <class fp_type>

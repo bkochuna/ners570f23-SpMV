@@ -25,20 +25,16 @@ namespace SpMV
         //getter functions
         //std::string getFilename(); //get underlying file
         fp_type getCoefficient(const size_t row, const size_t col); //read from the file and get the coefficients.
-        std::string getFormat(); //get the format of the spmv
+        inline std::string getFormat() const {return _format;}; //get the format of the spmv
         fp_type operator()(const size_t row, const size_t col); //get the value from the _buildcoeff map
-        size_t      getNumRows();
-        size_t      getNumCols();
-        size_t      getNumNonZeros();
-        MatrixState getState();
+        // Don't really need these four getter functions since there are already decleared and defined in the SparseMatrix class
+        // size_t      getNumRows();
+        // size_t      getNumCols();
+        // size_t      getNumNonZeros();
+        // MatrixState getState();
 
         //setter functions
         void setCoefficient(const size_t row, const size_t col, const fp_type aij);
-
-        // For destruction unit test
-        // size_t*  getPointerI()   const {return I;};
-        // size_t*  getPointerJ()   const {return J;};
-        // fp_type* getPointerVal() const {return val;};
     };
 }
 

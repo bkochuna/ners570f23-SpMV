@@ -19,9 +19,8 @@ namespace SpMV
 
     public:
         SparseMatrix_ELL(const int nrows, const int ncols);
-        void setCoefficient(const size_t row, const size_t col, const fp_type aij);
         void assembleStorage() {};
         fp_type getCoefficient(size_t i,size_t j);
-        inline std::string getFormat() const { return _format; };
+        std::string getFormat() const { return _format; };
     };
 }

@@ -15,17 +15,16 @@ namespace SpMV
         size_t *colIdx = nullptr;
         fp_type *val = nullptr;
         size_t *iterPtr = nullptr;
-        size_t _nrowsmax;
+        size_t *row = nullptr;
 
     public:
         // default constructor
         SparseMatrix_JDS();
 
         // overloaded constructor
-        SparseMatrix_JDS(const int nrows, const int ncols);
-        
+        SparseMatrix_JDS(const int nrows, const int ncols, size_t *colIdx1, fp_type *val1,size_t *iterPtr1, size_t *row1);
+
         // SparseMatrix_JDS(const int nrows, const int ncols);
-        // void setCoefficient(const size_t row, const size_t col, const fp_type aij);
         void assembleStorage() {};
         void disaaembleStorage() {};
         void Matmul() {};

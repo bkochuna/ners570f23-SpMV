@@ -35,5 +35,5 @@
           this->val = new fp_type[this->_nrowsmax*this->_nrows];
   Then assemble `colIdx,val` using the `_buildCoeff` map
 
-- 'view()' will use `getCoefficient()` to print out the row, column and value corresponding to every non-zero entry
+- `view()` will use `getCoefficient()` to print out the row, column and value corresponding to every non-zero entry
   

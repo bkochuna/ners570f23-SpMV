@@ -14,7 +14,7 @@ namespace SpMV
         size_t *J    = nullptr;
         fp_type *val = nullptr;
 
-        std::string _filename;
+        //std::string _filename;
         std::string _format;
 
     public:
@@ -23,7 +23,7 @@ namespace SpMV
         void matvec(fp_type* vecin, fp_type* vecout);
 
         //getter functions
-        std::string getFilename(); //get underlying file
+        //std::string getFilename(); //get underlying file
         fp_type getCoefficient(const size_t row, const size_t col); //read from the file and get the coefficients.
         std::string getFormat(); //get the format of the spmv
         fp_type operator()(const size_t row, const size_t col); //get the value from the _buildcoeff map

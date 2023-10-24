@@ -13,7 +13,7 @@ namespace SpMV
         _ncols = ncols;
         _format = "COO";
         I = new size_t[this->_nnz];
-        J = new fp_type[this->_nnz];
+        J = new size_t[this->_nnz];
         val = new fp_type[this->_nnz];
     }
 
@@ -25,6 +25,78 @@ namespace SpMV
             vecout[i] = 0.0;
         for (size_t i = 0; i < this->_nnz; i++)
             vecout[I[i]] += val[i] * vecin[J[i]];
+    }
+
+    template <class fp_type>
+    std::string SparseMatrix_COO<fp_type>::getFormat()
+    {
+        return _format;
+    }
+
+    template <class fp_type>
+    size_t SparseMatrix_COO<fp_type>::getNumRows()
+    {
+        return SparseMatrix<fp_type>::getNumRows();
+    }
+        
+    template <class fp_type>
+    size_t SparseMatrix_COO<fp_type>::getNumCols()
+    {
+        return SparseMatrix<fp_type>::getNumCols();
+    }
+        
+    template <class fp_type>
+    size_t SparseMatrix_COO<fp_type>::getNumNonZeros()
+    {
+        return SparseMatrix<fp_type>::getNumNonZeros();
+    }
+        
+    template <class fp_type>
+    MatrixState SparseMatrix_COO<fp_type>::getState()
+    {
+        return SparseMatrix<fp_type>::getState();
+    }
+
+    template <class fp_type>
+    fp_type SparseMatrix_COO<fp_type>::getCoefficient(const size_t row, const size_t col)
+    {
+        if(this->_state!=assembled){
+            throw std::runtime_error("Matrix must be assembled before its values are accessed");
+        }
+        if (col >= _ncols || row >= _nrows)
+        {
+            std::cout << "Specified matrix indices are not within the bounds of the matrix" << std::endl;	
+            exit(1);
+        }
+
+        fp_type value = 0;
+
+        for (size_t i = 0; i < this->_nnz; i++)
+            if(I[i] == row && J[i] == col)
+                value = val[i];
+        
+        return value;
+    }
+
+    template <class fp_type>
+    fp_type SparseMatrix_COO<fp_type>::operator()(const size_t row, const size_t col)
+    {
+        if(this->_state!=assembled){
+            throw std::runtime_error("Matrix must be assembled before its values are accessed");
+        }
+        if (col >= _ncols || row >= _nrows)
+        {
+            std::cout << "Specified matrix indices are not within the bounds of the matrix" << std::endl;	
+            exit(1);
+        }
+
+        return _buildCoeff[{row , col}];
+    }
+
+    template <class fp_type>
+    void SparseMatrix_COO<fp_type>::setCoefficient(const size_t row, const size_t col, const fp_type aij)
+    {
+        SparseMatrix<fp_type>::setCoefficient(row,col,aij);
     }
 
     template class SparseMatrix_COO<float>;

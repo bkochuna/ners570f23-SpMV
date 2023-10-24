@@ -8,12 +8,12 @@
 namespace SpMV
 {
     template <class fp_type>
-    SparseMatrix_DEN<fp_type>::SparseMatrix_DEN(const int nrows, const int ncols) :
-         SparseMatrix<fp_type>::SparseMatrix(nrows, ncols)
+    SparseMatrix_DEN<fp_type>::SparseMatrix_DEN(const int nrows, const int ncols) : SparseMatrix<fp_type>::SparseMatrix(nrows, ncols)
     {
         std::cout << "Hello from SparseMatrix_DEN Constructor!" << std::endl;
     }
 
+<<<<<<< HEAD
     //START DEN ACCESSOR METHODS
 
     //Returns matrix coefficient value at row and column indices i and j
@@ -84,6 +84,8 @@ namespace SpMV
     //END DEN ACCESSOR METHODS
 
 
+=======
+>>>>>>> refs/remotes/origin/den
     template class SparseMatrix_DEN<float>;
     template class SparseMatrix_DEN<double>;
 }

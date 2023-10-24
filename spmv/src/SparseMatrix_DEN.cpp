@@ -1,4 +1,7 @@
+#include "SparseMatrix.hpp"
 #include "SparseMatrix_DEN.hpp"
+#include <string>
+#include <stdlib.h>
 
 #include <iostream>
 
@@ -11,7 +14,76 @@ namespace SpMV
         std::cout << "Hello from SparseMatrix_DEN Constructor!" << std::endl;
     }
 
+    //START DEN ACCESSOR METHODS
+
+    //Returns matrix coefficient value at row and column indices i and j
+    template <class fp_type>
+    fp_type SparseMatrix_DEN<fp_type>::getCoef(const size_t i, const size_t j)
+    {
+        
+        assert(this->_state != undefined);
+
+        if (j >= this->_ncols || i >= this->_nrows){
+
+		std::cout << "Specified matrix indices are not within the bounds of the matrix" << std::endl;	
+		exit(1);
+	}
+
+	std::pair<size_t,size_t> coordPair;
+	coordPair.first = i;
+	coordPair.second = j;
+
+	fp_type aij = this->_buildCoeff[coordPair];
+
+	return aij;
+
+    }
+
+    //Returns the format string for DEN matrices
+    template <class fp_type>
+    std::string SparseMatrix_DEN<fp_type>::getFormat()
+    {
+	    return "DEN";
+    }
+   
+    //Returns the number of rows for a DEN format matrix
+    template <class fp_type> 
+    size_t SparseMatrix_DEN<fp_type>::getNumRows_DEN()
+    {
+	    size_t nrowDEN = this->_nrows;
+	    return nrowDEN;
+    }
+
+    //Returns the number of columns for a DEN format matrix
+    template <class fp_type>
+    size_t SparseMatrix_DEN<fp_type>::getNumCols_DEN()
+    {
+            size_t ncolDEN = this->_ncols;
+            return ncolDEN;
+    }
+
+    //Sets the coefficient value at row and col index values in specifiec matrix to aij
+    template <class fp_type>
+    void SparseMatrix_DEN<fp_type>::setCoefficient_DEN(const size_t row, const size_t col, const fp_type aij)
+    {
+
+	assert(this->_state != undefined);
+        if (col >= this->_ncols || row >= this->_nrows){
+
+                std::cout << "Specified matrix indices are not within the bounds of the matrix" << std::endl;
+                exit(1);
+        }
+
+
+
+	this->_buildCoeff[std::make_pair(row,col)] = aij;
+        this->_nnz = this->_buildCoeff.size();
+
+    } 
+
+    //END DEN ACCESSOR METHODS
 
 
     template class SparseMatrix_DEN<float>;
+    template class SparseMatrix_DEN<double>;
 }

@@ -42,25 +42,19 @@ namespace SpMV
 
     template <class fp_type>
     size_t SparseMatrix_ELL<fp_type>::getLongestRow(){
-        size_t count = 0;
-        size_t max_count = 0;
-
         // need ot iterate through map entries but unsure how.
         // https://stackoverflow.com/questions/26281979/c-loop-through-map
         // https://cplusplus.com/reference/utility/pair/pair/
-        for (int i=0; i<_nrows;i++){
-            _buildCoeff::iterator j
-            for (j=symbolTable.begin(); j!=symbolTable.end(); j++){
-                size_t rowidx= j->first->first; //should be the rowidx for jth entry
-                if (i==rowidx){
-                    count++;
-                }
-            }
-            if (max_count<count){
-                max_count = count;
-            }
-            count = 0;
-    }
+
+        size_t lenrow[_nrows] = { 0 };
+        _buildCoeff::iterator j;
+        for (j=symbolTable.begin(); j!=symbolTable.end(); j++){
+            size_t rowidx= j->first->first; //should be the rowidx for jth entry
+            lenrow[rowidx]++;
+        }
+        size_t len = sizeof(lenrow)/sizeof(lenrow[0]);
+        std::sort(lenrow,lenrow+len);
+        return lenrow[_nrows-1];
     }
 
     template class SparseMatrix_ELL<float>;

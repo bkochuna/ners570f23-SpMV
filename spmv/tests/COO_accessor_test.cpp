@@ -58,14 +58,14 @@ TEST_CASE(getFormatTest) {
 
   SpMV::SparseMatrix_COO<T> Af = SpMV::SparseMatrix_COO<T>(3,3);
 
-  string frmt_String = "DEN";
+  string frmt_String = "COO";
   ASSERT(Af.getFormat() == frmt_String);
 
 }
 
 
 template <typename T>
-TEST_SUITE(DEN_accessor_tests) {
+TEST_SUITE(COO_accessor_tests) {
   TEST((getRowsTest<6,T>));
   TEST((getColsTest<6,T>));
   TEST(getCoefTest<T>);
@@ -79,7 +79,7 @@ main() -> int
 {
   // Run the unit tests. If a test fails, the program will print failure info
   // and return 1.
-  RUN_SUITE(DEN_accessor_tests<float>);
-  RUN_SUITE(DEN_accessor_tests<double>);
+  RUN_SUITE(COO_accessor_tests<float>);
+  RUN_SUITE(COO_accessor_tests<double>);
   return 0; 
 }

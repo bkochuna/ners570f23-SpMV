@@ -22,6 +22,7 @@ namespace SpMV
         // Constructor that takes arguments
         SparseMatrix_CSR(const int nrows, const int ncols);
         void setCoefficient(const size_t row, const size_t col, const fp_type aij);
+        void CSR_view(const std::string& filename);
         void assembleStorage() {};
         // void getCoef(size_t i, size_t j, fp_type & Val);
         // string getFormat();

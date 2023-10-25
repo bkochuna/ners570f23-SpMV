@@ -22,5 +22,7 @@ namespace SpMV
         void assembleStorage() {};
         fp_type getCoefficient(size_t i,size_t j);
         inline string getFormat() const { return _format; };
+	void matvec(fp_type* vecin, fp_type* vecout);
+
     };
 }

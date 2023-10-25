@@ -25,12 +25,14 @@ namespace SpMV
     }
     
     template <class fp_type>
-    SparseMatrix_COO<fp_type>::~SaprseMatrix_COO() :
-	 SparseMatrix<fp_type>::~SparseMatrix()
+    SparseMatrix_COO<fp_type>::~SparseMatrix_COO()
     {
 	 delete(I);
 	 delete(J);
 	 delete(val);
+	 I=nullptr;
+	 J=nullptr;
+	 val=nullptr;
     }
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::matvec(fp_type* vecin, fp_type* vecout)

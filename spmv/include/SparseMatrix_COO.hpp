@@ -20,7 +20,7 @@ namespace SpMV
     public:
 	SparseMatrix_COO();
         SparseMatrix_COO(const int nrows, const int ncols);
-	virtual ~SparseMatrix_COO();
+	~SparseMatrix_COO();
         void assembleStorage() {};
         void matvec(fp_type* vecin, fp_type* vecout);
 

@@ -130,25 +130,26 @@ namespace SpMV
     // View Dense matrix
     template <class fp_type>
     void SparseMatrix_DEN<fp_type>::DEN_view(fp_type* A) {
-	    filename="DEN.out";
-        std::ofstream outputFile(filename);
+	    
+        
+        std::ofstream outputFile("DEN.out");
 	    if (!outputFile.is_open()) {
 		    std::cerr << "Error: Could not open file for writing." << std::endl;
-		    return 1;
+		    return;
 	    }
 
-	    outputFile << "["
+	    outputFile << "[";
 	    for (size_t i=0;i < this->_nrows;i++) {
 		    for (size_t j=0;j< this->_ncols; j++) {
-			    outputFile << this->A[i*this->_ncols+j] << " ";
+			    outputFile << this->A[i*this->_ncols+j] << "\t";
 		}
-	    outputFile << std::endl;
+	    outputFile<<std::endl;
 	    }
-	    outputFile << "]"
+	    outputFile << "]";
 	    outputFile.close();
 
     }
-    
+
     //END DEN ACCESSOR METHODS
 
 

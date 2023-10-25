@@ -18,6 +18,10 @@ namespace SpMV
 	//string format = "DEN";
 
     public:
+        //default constructor
+        SparseMatrix_DEN();
+        
+        // overloaded constructor
         SparseMatrix_DEN(const int nrows, const int ncols);
         void assembleStorage();
 	void disassembleStorage();

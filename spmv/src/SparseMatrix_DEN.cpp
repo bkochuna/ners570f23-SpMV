@@ -10,9 +10,31 @@ namespace SpMV
     template <class fp_type>
     SparseMatrix_DEN<fp_type>::SparseMatrix_DEN(const int nrows, const int ncols) : SparseMatrix<fp_type>::SparseMatrix(nrows, ncols)
     {
-        std::cout << "Hello from SparseMatrix_DEN Constructor!" << std::endl;
+        std::cout << "Hello from SparseMatrix_DEN Default Constructor!" << std::endl;
     }
 
+    template <class fp_type>
+    SparseMatrix_DEN<fp_type>::SparseMatrix_DEN(const int nrows, const int ncols) :
+        SparseMatrix<fp_type>::SparseMatrix(nrows, ncols)
+    {
+        std::cout << "Hello from SparseMatrix_DEN Overloaded Constructor!" << std::endl;
+        this->rowPtrs = new size_t[nrows + 1];
+        for (int i = 0; i < nrows + 1; i++)
+        {
+            this->rowPtrs[i] = 0;
+        }
+
+        this->A = new fp_type[this->_nrows*this->_ncols];
+        this->nrows = new size_t[this->_nrows];
+        this->ncols = new size_t[this->_ncols];
+            
+        for (int i = 0; i < this->_nrows + 1; i++){
+            for (int j = 0; j < this->_ncols + 1; j++){
+                this->A[i*this->_ncols+j] = 0;//initialize to zero
+            }
+        }
+    }
+    
     template <class fp_type>
     void SparseMatrix_DEN<fp_type>::assembleStorage()
     {
@@ -107,6 +129,11 @@ namespace SpMV
     //END DEN ACCESSOR METHODS
 
 
+    template <class fp_type>
+    SparseMatrix<fp_type>::~SparseMatrix()
+    {
+        std::cout << "Goodbye from SparseMatrix Destructor!" << std::endl;
+    }
 
     template class SparseMatrix_DEN<float>;
     template class SparseMatrix_DEN<double>;

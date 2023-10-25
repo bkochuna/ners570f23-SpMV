@@ -8,7 +8,7 @@
 namespace SpMV
 {
     template <class fp_type>
-    SparseMatrix_DEN<fp_type>::SparseMatrix_DEN(const int nrows, const int ncols) : SparseMatrix<fp_type>::SparseMatrix(nrows, ncols)
+    SparseMatrix_DEN<fp_type>::SparseMatrix_DEN() : SparseMatrix<fp_type>::SparseMatrix(0, 0)
     {
         std::cout << "Hello from SparseMatrix_DEN Default Constructor!" << std::endl;
     }

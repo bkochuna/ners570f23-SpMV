@@ -35,7 +35,7 @@ namespace SpMV
 	void setCoefficient_DEN(const size_t row, const size_t col, const fp_type aij); //Sets the coefficient at row and col to aij
         fp_type getCoef(const size_t i, const size_t j); //Returns the coefficient value at row and column indexes i and j
 	std::string getFormat(); //Returns the format (DEN) of the matrix
-
+    void DEN_view(fp_type* A)
 	// End DEN Accessor Functions
     };
 }

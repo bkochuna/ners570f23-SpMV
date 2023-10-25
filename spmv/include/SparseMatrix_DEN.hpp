@@ -24,8 +24,8 @@ namespace SpMV
 	void Matmul() {};
 	// DEN Accessor Functions
 	
-	size_t getNumRows_DEN(); //Returns the number of rows
-	size_t getNumCols_DEN(); //Returns the number of columns
+	[[gnu::pure]] size_t getNumRows_DEN(); //Returns the number of rows
+	[[gnu::pure]] size_t getNumCols_DEN(); //Returns the number of columns
 	void setCoefficient_DEN(const size_t row, const size_t col, const fp_type aij); //Sets the coefficient at row and col to aij
         fp_type getCoef(const size_t i, const size_t j); //Returns the coefficient value at row and column indexes i and j
 	std::string getFormat(); //Returns the format (DEN) of the matrix

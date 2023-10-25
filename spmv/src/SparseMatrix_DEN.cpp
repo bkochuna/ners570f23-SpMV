@@ -47,7 +47,7 @@ namespace SpMV
    
     //Returns the number of rows for a DEN format matrix
     template <class fp_type> 
-    size_t SparseMatrix_DEN<fp_type>::getNumRows_DEN()
+    [[gnu::pure]] size_t SparseMatrix_DEN<fp_type>::getNumRows_DEN()
     {
 	    size_t nrowDEN = this->_nrows;
 	    return nrowDEN;
@@ -55,7 +55,7 @@ namespace SpMV
 
     //Returns the number of columns for a DEN format matrix
     template <class fp_type>
-    size_t SparseMatrix_DEN<fp_type>::getNumCols_DEN()
+    [[gnu::pure]] size_t SparseMatrix_DEN<fp_type>::getNumCols_DEN()
     {
             size_t ncolDEN = this->_ncols;
             return ncolDEN;

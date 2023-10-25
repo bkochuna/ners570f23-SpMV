@@ -13,15 +13,17 @@ namespace SpMV
     {
     private:
         fp_type *A = nullptr;//nrows*ncols array storing the values of the desne matrix
-	//string format = "DEN";
 
     public:
-        SparseMatrix_DEN(const int nrows, const int ncols);
-        //void setCoefficient(const size_t row, const size_t col, const fp_type aij);
+        //default constructor
+        SparseMatrix_DEN();
+        
+        // overloaded constructor
+        SparseMatrix_DEN(const int nrows, const int ncols, fp_type *A);
+
         void assembleStorage() {};
-	void disassembleStorage() {};
-	void Matmul() {};
-        //void getCoef(size_t i,size_t j);
-        //string getFormat();
+	    void disassembleStorage() {};
+	    void Matmul() {};
+
     };
 }

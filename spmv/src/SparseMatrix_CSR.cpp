@@ -143,11 +143,11 @@ namespace SpMV
         // END DO
 
         // C++ Implementation:
-        for (size_t rownum = 0; rownum < this->nrows + 1; rownum++)
+        for (size_t rownum = 0; rownum < this->_nrows + 1; rownum++)
         {
             for (size_t idx = this->rowPtrs[rownum]; idx < rowPtrs[rownum + 1]; idx++)
             {
-                vecout[rownum] = vecout[rownum] + (this->values[idx] * vecin[this->colIdx[idx]]);
+                vecout[rownum] = vecout[rownum] + (this->value[idx] * vecin[this->colIdx[idx]]);
             }
         }
     }

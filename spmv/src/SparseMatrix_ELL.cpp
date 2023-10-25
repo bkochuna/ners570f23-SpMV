@@ -56,6 +56,12 @@ namespace SpMV
         return rowLengths[this->_nrows-1];
     }
 
+    template <class fp_type> 
+    void SparceMatrix_ELL<fp_type>::View(){
+        // Add view method
+        
+    }
+
     template class SparseMatrix_ELL<float>;
     template class SparseMatrix_ELL<double>;
 }

@@ -153,35 +153,62 @@ namespace SpMV
     }
 
     template <class fp_type>
-void SparseMatrix_CSR<fp_type>::CSR_view(const std::string& filename) {
-    std::ofstream outputFile(filename);
-    if (!outputFile.is_open()) {
-        std::cerr << "Error: Could not open the file for writing." << std::endl;
-        return;
-    }
-    
-    outputFile << "[ ";
-    for (int i = 0; i < this->_nrows; i++) {
-        for (int j = 0; j < this->_ncols; j++) {
-            int columnIdx = -1;
-            for (size_t k = this->rowPtrs[i]; k < this->rowPtrs[i + 1]; k++) {
-                if (this->colIdx[k] == j) {
-                    columnIdx = k;
-                    break;
+    void SparseMatrix_CSR<fp_type>::CSR_view(const std::string& filename) {
+        std::ofstream outputFile(filename);
+        if (!outputFile.is_open()) {
+            std::cerr << "Error: Could not open the file for writing." << std::endl;
+            return;
+        }
+        
+        outputFile << "[ ";
+        for (int i = 0; i < this->_nrows; i++) {
+            for (int j = 0; j < this->_ncols; j++) {
+                int columnIdx = -1;
+                for (size_t k = this->rowPtrs[i]; k < this->rowPtrs[i + 1]; k++) {
+                    if (this->colIdx[k] == j) {
+                        columnIdx = k;
+                        break;
+                    }
+                }
+                if (columnIdx != -1) {
+                    outputFile << this->value[columnIdx] << " ";
+                } else {
+                    outputFile << "0 ";
                 }
             }
-            if (columnIdx != -1) {
-                outputFile << this->value[columnIdx] << " ";
-            } else {
-                outputFile << "0 ";
-            }
+            outputFile << std::endl;
         }
-        outputFile << std::endl;
+        outputFile << "]";
+    
+        outputFile.close();
     }
-    outputFile << "]";
+    
+    // Get coefficient at index (i,j), returns zero if no coefficient is present
+    // - Max Herzog (maxzog)
+    template <class fp_type>
+    void SparseMatrix_CSR<fp_type>::getCoef(size_t i, size_t j, fp_type *Val){
+        size_t iloc; // row to access
+        size_t rowl; // nnz per row
 
-    outputFile.close();
-}
+        Val = 0.0; // set value to zero - only changes if the index (i,j) has a non-zero value
+        if (i > this->nrows) {
+            std::cerr << "Error: Desired row index is not within matrix bounds." <<  std::endl;   
+        }
+        if (j > this->ncols) {
+            std::cerr << "Error: Desired col index is not within matrix bounds." <<  std::endl;   
+        }
+        iloc = this->rowPtrs[i];
+        rowl = this->rowPtrs[i+1] - this->rowPtrs[i];
+        
+        for (size_t jj=this->colIdx[iloc]; jj < rowl; j++){
+            // If the desired row, col has a non-zero change the *Val to that value
+            if (jj == j){
+                Val = value[jj];
+                return 0;    
+            } 
+        }
+        return 0;     
+    }   
 
     template class SparseMatrix_CSR<float>;
     template class SparseMatrix_CSR<double>;

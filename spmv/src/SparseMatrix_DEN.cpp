@@ -14,21 +14,26 @@ namespace SpMV
     }
 
     template <class fp_type>
-    void SparseMatrix_DEN<fp_type>::assembleStorage(const size_t row, const size_t col)
+    void SparseMatrix_DEN<fp_type>::assembleStorage()
     {
 	    assert(this->_state != undefined);
 
-        this->A = new size_t[row,col]; // Assemble storage
-        this->A = 0; //Initialize to zero
+        this->A = new fp_type[this->_nrows*this->_ncols]; //Assemble storage
+                
+        for (size_t i = 0; i < this->_nrows + 1; i++){
+            for (size_t j = 0; j < this->_ncols + 1; j++){
+                this->A[i*this->_ncols+j] = 0;//initialize to zero
+            }
+        }
 
     }
 
     template <class fp_type>
     void SparseMatrix_DEN<fp_type>::disassembleStorage()
     {
-	    assert(this->A != undefined);
-        
-        delete[] this->A; //Disassemble A
+        assert(this->_state != undefined);
+
+        this->A=nullptr; //Disassemble A
 
     }
 

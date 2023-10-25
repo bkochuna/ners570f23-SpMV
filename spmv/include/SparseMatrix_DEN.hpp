@@ -19,7 +19,7 @@ namespace SpMV
 
     public:
         SparseMatrix_DEN(const int nrows, const int ncols);
-        void assembleStorage(const size_t row, const size_t col);
+        void assembleStorage();
 	void disassembleStorage();
 	void Matmul() {};
 	// DEN Accessor Functions

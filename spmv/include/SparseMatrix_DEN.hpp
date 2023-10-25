@@ -12,6 +12,8 @@ namespace SpMV
     class SparseMatrix_DEN : public SparseMatrix<fp_type>
     {
     private:
+        size_t *I    = nullptr;
+        size_t *J    = nullptr;
         fp_type *A = nullptr;//nrows*ncols array storing the values of the dense matrix
 	//int nrows;
 	//std::map<std::pair<size_t, size_t>, fp_type> _buildCoeff;

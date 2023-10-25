@@ -42,10 +42,22 @@ namespace SpMV
 
         this->A = new fp_type[this->_nrows*this->_ncols]; //Assemble storage
                 
-        for (size_t i = 0; i < this->_nrows + 1; i++){
-            for (size_t j = 0; j < this->_ncols + 1; j++){
+        for (size_t i = 0; i < this->_nrows ; i++){
+            for (size_t j = 0; j < this->_ncols; j++){
                 this->A[i*this->_ncols+j] = 0;//initialize to zero
             }
+        }
+
+        std::map<std::pair<size_t, size_t>, fp_type>::iterator it = _buildCoeff.begin();
+
+        std::pair<size_t,size_t> coordPair;
+        fp_type aij = 0;
+        while (it != _buildCoeff.end())
+        {
+            coordPair = it->first;
+            aij=getCoef(coordPair.first,coordPair.second)
+            A[coordPair.first*this->_ncols+coordPair.second]=aij;
+            ++it;
         }
 
     }

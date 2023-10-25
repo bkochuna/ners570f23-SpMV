@@ -22,6 +22,15 @@ namespace SpMV
         this->ncols = new size_t[ncols];
     }
 
+    // Returns string denoting the sparse matrix storage format
+    // A string was chosen to be consistent with the header and the
+    // implementations on other branches.
+    // - Max Herzog (maxzog)
+    template <class fp_type>
+    std::string SparseMatrix_CSR<fp_type>::getFormat(){
+        return "CSR";
+    }
+
     template <class fp_type>
     void SparseMatrix_CSR<fp_type>::assembleStorage(const std::vector<std::vector<fp_type>> &matrix)
     {

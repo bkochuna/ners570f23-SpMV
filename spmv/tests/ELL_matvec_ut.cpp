@@ -34,7 +34,7 @@ namespace SpMV{
 
         test_matrix->assembleStorage();
 
-        fp_type input[3]={2,20,-5};
+        fp_type input[3]={2.0,20.0,-5.0};
         fp_type output[3];
         test_matrix->matvec(input,output);
         for (size_t i = 0; i < 3; i++)

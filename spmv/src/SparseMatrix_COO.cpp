@@ -5,18 +5,33 @@
 namespace SpMV
 {
     template <class fp_type>
+    SparseMatrix_COO<fp_type>::SparseMatrix_COO() : 
+	 SparseMatrix<fp_type>::SparseMatrix(0,0)
+    {
+         std::cout << "From the default SparseMatrix_COO constructor!" << std::endl;
+    }
+    
+    template <class fp_type>
     SparseMatrix_COO<fp_type>::SparseMatrix_COO(const int nrows, const int ncols) :
          SparseMatrix<fp_type>::SparseMatrix(nrows, ncols)
     {
         std::cout << "Hello from SparseMatrix_COO Constructor!" << std::endl;
-        this->_nrows = nrows;
-        this->_ncols = ncols;
+        //this->_nrows = nrows;
+        //this->_ncols = ncols;    -> nrows and ncols are defined by the parent class constructors
         _format = "COO";
-        I = new size_t[this->_nnz];
-        J = new size_t[this->_nnz];
-        val = new fp_type[this->_nnz];
+        //I = new size_t[this->_nnz];
+        //J = new size_t[this->_nnz];
+        //val = new fp_type[this->_nnz];   -> These must be set by the assembleStorage method
     }
-
+    
+    template <class fp_type>
+    SparseMatrix_COO<fp_type>::~SaprseMatrix_COO() :
+	 SparseMatrix<fp_type>::~SparseMatrix()
+    {
+	 delete(I);
+	 delete(J);
+	 delete(val);
+    }
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::matvec(fp_type* vecin, fp_type* vecout)
     {

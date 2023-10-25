@@ -12,15 +12,15 @@ namespace SpMV
     class SparseMatrix_DEN : public SparseMatrix<fp_type>
     {
     private:
-        fp_type *A = nullptr;//nrows*ncols array storing the values of the desne matrix
+        fp_type *A = nullptr;//nrows*ncols array storing the values of the dense matrix
 	//int nrows;
 	//std::map<std::pair<size_t, size_t>, fp_type> _buildCoeff;
 	//string format = "DEN";
 
     public:
         SparseMatrix_DEN(const int nrows, const int ncols);
-        void assembleStorage() {};
-	void disassembleStorage() {};
+        void assembleStorage(const size_t row, const size_t col);
+	void disassembleStorage();
 	void Matmul() {};
 	// DEN Accessor Functions
 	

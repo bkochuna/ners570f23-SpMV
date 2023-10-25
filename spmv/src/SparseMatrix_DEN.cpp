@@ -13,6 +13,25 @@ namespace SpMV
         std::cout << "Hello from SparseMatrix_DEN Constructor!" << std::endl;
     }
 
+    template <class fp_type>
+    void SparseMatrix_DEN<fp_type>::assembleStorage(const size_t row, const size_t col)
+    {
+	    assert(this->_state != undefined);
+
+        this->A = new size_t[row,col]; // Assemble storage
+        this->A = 0; //Initialize to zero
+
+    }
+
+    template <class fp_type>
+    void SparseMatrix_DEN<fp_type>::disassembleStorage()
+    {
+	    assert(this->A != undefined);
+        
+        delete[] this->A; //Disassemble A
+
+    }
+
     //START DEN ACCESSOR METHODS
 
     //Returns matrix coefficient value at row and column indices i and j
@@ -61,7 +80,7 @@ namespace SpMV
             return ncolDEN;
     }
 
-    //Sets the coefficient value at row and col index values in specifiec matrix to aij
+    //Sets the coefficient value at row and col index values in specific matrix to aij
     template <class fp_type>
     void SparseMatrix_DEN<fp_type>::setCoefficient_DEN(const size_t row, const size_t col, const fp_type aij)
     {

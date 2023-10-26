@@ -3,38 +3,39 @@
 #include <SparseMatrix_COO.hpp>
 #include "unit_test_framework.hpp"
 
-TEST_CASE(case_float){
+template <typename T>
+TEST_CASE(testcase){
     try
     {
-        SpMV::SparseMatrix<float> *test_matrix = new SpMV::SparseMatrix_COO<float>(3,3);
-        test_matrix->setCoefficient(static_cast<size_t>(0),static_cast<size_t>(0),static_cast<float>(1));
-	test_matrix->setCoefficient(static_cast<size_t>(0),static_cast<size_t>(2),static_cast<float>(2));
-	test_matrix->setCoefficient(static_cast<size_t>(1),static_cast<size_t>(1),static_cast<float>(3));
-	test_matrix->setCoefficient(static_cast<size_t>(2),static_cast<size_t>(0),static_cast<float>(4));
-	test_matrix->setCoefficient(static_cast<size_t>(2),static_cast<size_t>(2),static_cast<float>(5));
+        SpMV::SparseMatrix<T> *test_matrix = new SpMV::SparseMatrix_COO<T>(3,3);
+        test_matrix->setCoefficient(static_cast<size_t>(0),static_cast<size_t>(0),static_cast<T>(1));
+	test_matrix->setCoefficient(static_cast<size_t>(0),static_cast<size_t>(2),static_cast<T>(2));
+	test_matrix->setCoefficient(static_cast<size_t>(1),static_cast<size_t>(1),static_cast<T>(3));
+	test_matrix->setCoefficient(static_cast<size_t>(2),static_cast<size_t>(0),static_cast<T>(4));
+	test_matrix->setCoefficient(static_cast<size_t>(2),static_cast<size_t>(2),static_cast<T>(5));
 
         test_matrix->assembleStorage();
  	
-	float* vecin = new float[3];
-	float* vecout = new float[3];
+	T* vecin = new T[3];
+	T* vecout = new T[3];
 
 	// Initialize the elements of vecin
 	for (int i = 0; i < 3; i++)
 	{
-	    vecin[i] = static_cast<float>(i)+1.0f;
+	    vecin[i] = static_cast<T>(i)+static_cast<T>(1);
 	}
         // Initialize result
-	float* result = new float[3];
+	T* result = new T[3];
 
 	// Assign values
-	result[0] = 7.0f;
-	result[1] = 6.0f;
-	result[2] = 23.0f;
+	result[0] = static_cast<T>(7);
+	result[1] = static_cast<T>(6);
+	result[2] = static_cast<T>(23);
         test_matrix->matvec(vecin,vecout);
 
 	for (size_t i=0; i<test_matrix->getNumRows(); i++)
 	{
-		ASSERT_NEAR(vecout[i],result[i],static_cast<float>(1e-3));
+		ASSERT_NEAR(vecout[i],result[i],static_cast<T>(1e-4));
 	}
 	delete(test_matrix);
     }catch(const std::exception&){}  
@@ -80,7 +81,7 @@ TEST_CASE(case_double){
 auto
 main() -> int
 {	
-    TEST(case_float);
-    TEST(case_double);
+    TEST(testcase<float>);
+    TEST(testcase<double>);
     return 0; 
 }

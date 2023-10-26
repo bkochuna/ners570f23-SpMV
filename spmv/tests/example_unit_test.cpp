@@ -66,6 +66,7 @@ TEST_CASE(subtraction) {
   T const b = 2;
   T const c = 1;
   ASSERT(a - b == c);
+  // ASSERT_NEAR(a - b, c, 1.E-6);
 }
 
 template <size_t N, typename T>
@@ -106,5 +107,7 @@ main() -> int
   RUN_SUITE(my_suite);
   RUN_SUITE(add_sub_suite<int>);
   RUN_SUITE(add_sub_suite<size_t>);
+  
+  // RUN_SUITE()
   return 0; 
 }

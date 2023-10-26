@@ -1,5 +1,4 @@
 #include <SpMV.hpp>
-#include <SparseMatrix_DEN.hpp>
 #include <vector> // std::vector
 #include <string>
 #include <stdlib.h>
@@ -36,7 +35,7 @@ TEST_CASE(getCoefTest) {
 
   AD.setCoefficient_DEN(2,4,static_cast<T>(3.14));
 
-  ASSERT_NEAR(AD.getCoef_DEN(2,4), static_cast<T>(3.14), static_cast<T>(1e-3));
+  ASSERT_NEAR(AD.getCoef(2,4), static_cast<T>(3.14), static_cast<T>(1e-3));
 
 }
 
@@ -62,23 +61,21 @@ TEST_CASE(getFormatTest) {
 
 }
 
-
-template <typename T>
-TEST_SUITE(DEN_accessor_tests) {
-  TEST((getRowsTest<6,T>));
-  TEST((getColsTest<6,T>));
-  TEST(getCoefTest<T>);
-  TEST(getCoefInitTest<T>);
-  TEST(getFormatTest<T>);
-}
-
-
 auto
 main() -> int
 {
-  // Run the unit tests. If a test fails, the program will print failure info
-  // and return 1.
-  RUN_SUITE(DEN_accessor_tests<float>);
-  RUN_SUITE(DEN_accessor_tests<double>);
-  return 0; 
+    
+    TEST((getRowsTest<6,float>));
+    TEST((getColsTest<6,float>));
+    TEST(getCoefTest<float>);
+    TEST(getCoefInitTest<float>);
+    TEST(getFormatTest<float>);
+    
+    TEST((getRowsTest<6,double>));
+    TEST((getColsTest<6,double>));
+    TEST(getCoefTest<double>);
+    TEST(getCoefInitTest<double>);
+    TEST(getFormatTest<double>);
+    return 0; 
 }
+

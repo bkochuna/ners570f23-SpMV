@@ -10,30 +10,81 @@ namespace SpMV
     {
          std::cout << "From the default SparseMatrix_COO constructor!" << std::endl;
     }
-    
+
     template <class fp_type>
     SparseMatrix_COO<fp_type>::SparseMatrix_COO(const int nrows, const int ncols) :
          SparseMatrix<fp_type>::SparseMatrix(nrows, ncols)
     {
         std::cout << "Hello from SparseMatrix_COO Constructor!" << std::endl;
-        //this->_nrows = nrows;
-        //this->_ncols = ncols;    -> nrows and ncols are defined by the parent class constructors
         _format = "COO";
-        //I = new size_t[this->_nnz];
-        //J = new size_t[this->_nnz];
-        //val = new fp_type[this->_nnz];   -> These must be set by the assembleStorage method
     }
-    
+
     template <class fp_type>
     SparseMatrix_COO<fp_type>::~SparseMatrix_COO()
     {
-	 delete(I);
-	 delete(J);
-	 delete(val);
-	 I=nullptr;
-	 J=nullptr;
-	 val=nullptr;
+         delete[] I;
+         delete[] J;
+         delete[] val;
+         I=nullptr;
+         J=nullptr;
+         val=nullptr;
+         this->_state=undefined;
     }
+
+    template <class fp_type>
+    void SparseMatrix_COO<fp_type>::assembleStorage()
+    {
+        this->_state = building;
+
+        // Allocate memory for COO format
+        this->_nnz = this->_buildCoeff.size();
+        I = new size_t[this->_nnz];
+        J = new size_t[this->_nnz];
+        val = new fp_type[this->_nnz];
+
+        // Populates (this) matrix by looping over the map _buildCoeff
+        size_t i = 0;
+        for (auto& value : this->_buildCoeff) {
+            I[i] = value.first.first;
+            J[i] = value.first.second;
+            val[i] = value.second;
+            i++;
+        }
+        
+        this->_state = initialized;
+    }
+
+    template <class fp_type>
+    fp_type** SparseMatrix_COO<fp_type>::disassembleStorage()
+    {
+        if(this->_state != initialized) {
+            throw std::runtime_error("Matrix must be assembled before it can be disassembled");
+        }
+
+        // Create a 2D array and initialize with zeroes
+        fp_type** dense = new fp_type*[this->_nrows];
+        for (size_t i = 0; i < this->_nrows; i++) {
+            dense[i] = new fp_type[this->_ncols]();
+        }
+
+        // Fill the dense array using the COO format
+        for (size_t i = 0; i < this->_nnz; i++) {
+            dense[I[i]][J[i]] = val[i];
+        }
+
+        // Release memory
+        delete[] I;
+        delete[] J;
+        delete[] val;
+        I = nullptr;
+        J = nullptr;
+        val = nullptr;
+        
+        this->_state = undefined;
+
+        return dense;
+    }
+
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::matvec(fp_type* vecin, fp_type* vecout)
     {

@@ -20,8 +20,6 @@ namespace SpMV
         std::cout << "Hello from SparseMatrix_DEN Overloaded Constructor!" << std::endl;
             
         this->A = new fp_type[this->_nrows*this->_ncols];
-        this->nrows = new size_t[nrows];
-        this->ncols = new size_t[ncols];
     }
     
     template <class fp_type>
@@ -154,9 +152,11 @@ namespace SpMV
 
 
     template <class fp_type>
-    SparseMatrix<fp_type>::~SparseMatrix()
+    SparseMatrix<fp_type>::~SparseMatrix_DEN()
     {
         std::cout << "Goodbye from SparseMatrix Destructor!" << std::endl;
+        delete(A);
+        A=nullptr;
     }
 
     template class SparseMatrix_DEN<float>;

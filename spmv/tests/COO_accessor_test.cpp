@@ -46,7 +46,7 @@ TEST_CASE(getCoefInitTest) {
 
   SpMV::SparseMatrix_COO<T> Af = SpMV::SparseMatrix_COO<T>(5,5);
 
-  ASSERT_NEAR(Af.getCoefficient(3,2), 0.0, static_cast<T>(1e-3));
+  ASSERT_NEAR(Af.getCoefficient(3,2), static_cast<T>(0.0), static_cast<T>(1e-3));
 
 }
 

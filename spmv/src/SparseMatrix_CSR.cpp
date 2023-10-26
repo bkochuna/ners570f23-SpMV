@@ -170,11 +170,10 @@ namespace SpMV
             std::cerr << "Error: Could not open the file for writing." << std::endl;
             return;
         }
-        cout << filename << endl;
         
-        // outputFile << "[ ";
-        for (size_t i = 0; i < this->_nrows; i++) {
-            for (size_t j = 0; j < this->_ncols; j++) {
+        outputFile << "[ ";
+        for (int i = 0; i < this->_nrows; i++) {
+            for (int j = 0; j < this->_ncols; j++) {
                 int columnIdx = -1;
                 for (size_t k = this->rowPtrs[i]; k < this->rowPtrs[i + 1]; k++) {
                     if (this->colIdx[k] == j) {
@@ -190,7 +189,7 @@ namespace SpMV
             }
             outputFile << std::endl;
         }
-        // outputFile << "]";
+        outputFile << "]";
     
         outputFile.close();
     }

@@ -1,7 +1,7 @@
 
 add_library(spmv
     SparseMatrix.cpp
-    SparseMatrix_COO.cpp
+    SparseMatrix_ELL.cpp
 )
 
 target_include_directories(spmv PUBLIC

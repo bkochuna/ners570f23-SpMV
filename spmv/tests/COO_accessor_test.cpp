@@ -33,10 +33,17 @@ TEST_CASE(getCoefTest) {
 
   SpMV::SparseMatrix_COO<T> Af = SpMV::SparseMatrix_COO<T>(5,5);
 
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wfloat-equal"
+  #pragma GCC diagnostic ignored "-Werror=float-conversion"
+  #pragma GCC diagnostic ignored "-Werror=double-promotion"
+
   T aij = 3.67;
   Af.setCoefficient(3,2,aij);
 
   ASSERT_NEAR(Af.getCoefficient(3,2), aij, 1e-3);
+
+  #pragma GCC diagnostic pop
 
 }
 
@@ -45,9 +52,16 @@ TEST_CASE(getCoefTest) {
 template <typename T>
 TEST_CASE(getCoefInitTest) {
 
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wfloat-equal"
+  #pragma GCC diagnostic ignored "-Werror=float-conversion"
+  #pragma GCC diagnostic ignored "-Werror=double-promotion"
+
   SpMV::SparseMatrix_COO<T> Af = SpMV::SparseMatrix_COO<T>(5,5);
 
   ASSERT_NEAR(Af.getCoefficient(3,2), 0.0, 1e-3);
+
+  #pragma GCC diagnostic pop
 
 }
 
@@ -58,7 +72,7 @@ TEST_CASE(getFormatTest) {
 
   SpMV::SparseMatrix_COO<T> Af = SpMV::SparseMatrix_COO<T>(3,3);
 
-  string frmt_String = "COO";
+  std::string frmt_String = "COO";
   ASSERT(Af.getFormat() == frmt_String);
 
 }

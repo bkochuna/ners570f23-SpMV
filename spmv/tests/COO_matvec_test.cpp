@@ -77,14 +77,10 @@ TEST_CASE(case_double){
     }catch(const std::exception&){}
 }
 
-TEST_SUITE(matvec_suite){
-    TEST(case_float);
-    TEST(case_double);
-}
-
 auto
 main() -> int
-{
-    RUN_SUITE(matvec_suite);
+{	
+    TEST(case_float);
+    TEST(case_double);
     return 0; 
 }

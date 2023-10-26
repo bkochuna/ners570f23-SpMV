@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include <iostream>
+#include <map>
 
 namespace SpMV
 {
@@ -35,14 +36,14 @@ namespace SpMV
             }
         }
 
-        std::map<std::pair<size_t, size_t>, fp_type>::iterator it = _buildCoeff.begin();
+        typename std::map<std::pair<size_t, size_t>, fp_type>::iterator it = this->_buildCoeff.begin();
 
         std::pair<size_t,size_t> coordPair;
         fp_type aij = 0;
-        while (it != _buildCoeff.end())
+        while (it != this->_buildCoeff.end())
         {
             coordPair = it->first;
-            aij=getCoef(coordPair.first,coordPair.second)
+            aij=getCoef(coordPair.first,coordPair.second);
             A[coordPair.first*this->_ncols+coordPair.second]=aij;
             ++it;
         }

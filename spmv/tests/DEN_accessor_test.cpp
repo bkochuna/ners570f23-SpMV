@@ -61,23 +61,21 @@ TEST_CASE(getFormatTest) {
 
 }
 
-
-template <typename T>
-TEST_SUITE(DEN_accessor_tests) {
-  TEST((getRowsTest<6,T>));
-  TEST((getColsTest<6,T>));
-  TEST(getCoefTest<T>);
-  TEST(getCoefInitTest<T>);
-  TEST(getFormatTest<T>);
-}
-
-
 auto
 main() -> int
 {
-  // Run the unit tests. If a test fails, the program will print failure info
-  // and return 1.
-  RUN_SUITE(DEN_accessor_tests<float>);
-  RUN_SUITE(DEN_accessor_tests<double>);
-  return 0; 
+    
+    TEST((getRowsTest<6,float>));
+    TEST((getColsTest<6,float>));
+    TEST(getCoefTest<float>);
+    TEST(getCoefInitTest<float>);
+    TEST(getFormatTest<float>);
+    
+    TEST((getRowsTest<6,double>));
+    TEST((getColsTest<6,double>));
+    TEST(getCoefTest<double>);
+    TEST(getCoefInitTest<double>);
+    TEST(getFormatTest<double>);
+    return 0; 
 }
+

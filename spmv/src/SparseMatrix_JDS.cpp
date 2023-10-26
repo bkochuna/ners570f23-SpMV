@@ -15,7 +15,7 @@ namespace SpMV
 
 
     template <class fp_type>
-    SparseMatrix_JDS<fp_type>::SparseMatrix_JDS(const int nrows, const int ncols, size_t *colIdx1, fp_type *val1, size_t *iterPtr1, size_t *row1) :
+    SparseMatrix_JDS<fp_type>::SparseMatrix_JDS(const int nrows, const int ncols) :
         SparseMatrix<fp_type>::SparseMatrix(nrows, ncols)
     {
         std::cout << "Hello from SparseMatrix_JDS Constructor!" << std::endl;
@@ -32,26 +32,10 @@ namespace SpMV
                 _nrowsmax = _temp;
             }
         }
-
         this->colIdx = new size_t[this->_nnz];
         this->val = new fp_type[this->_nnz];
         this->iterPtr = new size_t[this->_nrowsmax + 1];
         this->row = new size_t[this->_nrows];
-        
-
-        for (size_t i = 0; i < this->_nnz; i++){
-            this->colIdx[i] = colIdex1[i];
-            this->val[i] = val[i];
-        }
-
-        for (size_t i = 0; i < this->_nrows; i++){
-            this->row[i] = row1[i];
-        }
-
-        for (size_t i = 0; i < _nrowsmax + 1; i++){
-            this->iterPtr[i] = iterPtr1[i];
-        }
-
     }
 
 
@@ -59,6 +43,10 @@ namespace SpMV
     SparseMatrix<fp_type>::~SparseMatrix()
     {
         std::cout << "Goodbye from SparseMatrix Destructor!" << std::endl;
+        delete colIdx;
+        delete val;
+        delete iterPtr;
+        delete row;
     }
 
 

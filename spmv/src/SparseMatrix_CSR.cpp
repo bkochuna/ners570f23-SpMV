@@ -1,7 +1,7 @@
 #include "SparseMatrix_CSR.hpp"
 
 #include <iostream>
-#include <fstream> 
+#include <fstream>
 using namespace std;
 
 namespace SpMV
@@ -27,22 +27,33 @@ namespace SpMV
     // implementations on other branches.
     // - Max Herzog (maxzog)
     template <class fp_type>
-    std::string SparseMatrix_CSR<fp_type>::getFormat(){
+    std::string SparseMatrix_CSR<fp_type>::getFormat()
+    {
         return "CSR";
     }
 
-    /*
     template <class fp_type>
     void SparseMatrix_CSR<fp_type>::assembleStorage(const std::vector<std::vector<fp_type>> &matrix)
     {
-
-        // if the nnz is already created in the constructor, delete this:
-        // _nnz = 0;
-        // for (const auto& row : matrix) {
-        //     for (const auto& val : row) {
-        //         if (val != 0) _nnz++;
+        // calculate _nnz if not already set
+        // int _nnz = 0;
+        // for (const auto &row : matrix)
+        // {
+        //     for (const auto &val : row)
+        //     {
+        //         if (val != 0)
+        //             _nnz++;
         //     }
         // }
+
+        // If there was a previous allocation, delete it
+        delete[] this->colIdx;
+        delete[] this->value;
+        delete[] this->rowPtrs;
+
+        this->rowPtrs = new size_t[this->_nrows + 1];
+        this->colIdx = new size_t[this->_nnz];
+        this->value = new fp_type[this->_nnz];
 
         int idx = 0;  // Index for colIdx and value
         int rptr = 0; // Index for rowPtrs
@@ -61,22 +72,21 @@ namespace SpMV
         }
         rowPtrs[rptr] = idx;
     }
-    */
-    
-    // template <class fp_type>
-    // void SparseMatrix_CSR<fp_type>::disassembleStorage(std::vector<std::vector<fp_type>>& matrix)
-    // {
-    //     matrix.clear();
-    //     matrix.resize(this->nrows, std::vector<fp_type>(this->ncols, 0));
 
-    //     for (int i = 0; i < this->nrows; ++i)
-    //     {
-    //         for (size_t j = this->rowPtrs[i]; j < this->rowPtrs[i + 1]; ++j)
-    //         {
-    //             matrix[i][this->colIdx[j]] = this->value[j];
-    //         }
-    //     }
-    // }
+    template <class fp_type>
+    void SparseMatrix_CSR<fp_type>::disassembleStorage(const std::vector<std::vector<fp_type>> &matrix)
+    {
+        matrix.clear();
+        matrix.resize(this->_nrows, std::vector<fp_type>(this->_ncols, 0));
+
+        for (int i = 0; i < this->_nrows; ++i)
+        {
+            for (size_t j = this->rowPtrs[i]; j < this->rowPtrs[i + 1]; ++j)
+            {
+                matrix[i][this->colIdx[j]] = this->value[j];
+            }
+        }
+    }
 
     template <class fp_type>
     void SparseMatrix_CSR<fp_type>::setCoefficient(const size_t row, const size_t col, const fp_type aij)
@@ -164,60 +174,74 @@ namespace SpMV
     }
 
     template <class fp_type>
-    void SparseMatrix_CSR<fp_type>::CSR_view(const std::string& filename) {
+    void SparseMatrix_CSR<fp_type>::CSR_view(const std::string &filename)
+    {
         std::ofstream outputFile(filename);
-        if (!outputFile.is_open()) {
+        if (!outputFile.is_open())
+        {
             std::cerr << "Error: Could not open the file for writing." << std::endl;
             return;
         }
-        
+
         // outputFile << "[ ";
-        for (size_t i = 0; i < this->_nrows; i++) {
-            for (size_t j = 0; j < this->_ncols; j++) {
+        for (size_t i = 0; i < this->_nrows; i++)
+        {
+            for (size_t j = 0; j < this->_ncols; j++)
+            {
                 int columnIdx = -1;
-                for (size_t k = this->rowPtrs[i]; k < this->rowPtrs[i + 1]; k++) {
-                    if (this->colIdx[k] == j) {
+                for (size_t k = this->rowPtrs[i]; k < this->rowPtrs[i + 1]; k++)
+                {
+                    if (this->colIdx[k] == j)
+                    {
                         columnIdx = static_cast<int>(k);
                         break;
                     }
                 }
-                if (columnIdx != -1) {
+                if (columnIdx != -1)
+                {
                     outputFile << this->value[columnIdx] << " ";
-                } else {
+                }
+                else
+                {
                     outputFile << "0 ";
                 }
             }
             outputFile << std::endl;
         }
         // outputFile << "]";
-    
+
         outputFile.close();
     }
-    
+
     // Get coefficient at index (i,j), returns zero if no coefficient is present
     // - Max Herzog (maxzog)
     template <class fp_type>
-    void SparseMatrix_CSR<fp_type>::getCoefficient(size_t i, size_t j, fp_type* Val){
+    void SparseMatrix_CSR<fp_type>::getCoefficient(size_t i, size_t j, fp_type *Val)
+    {
         size_t iloc; // row to access
         size_t rowl; // nnz per row
 
         *Val = 0.0; // set value to zero - only changes if the index (i,j) has a non-zero value
-        if (i > this->_nrows) {
-            std::cerr << "Error: Desired row index is not within matrix bounds." <<  std::endl;   
+        if (i > this->_nrows)
+        {
+            std::cerr << "Error: Desired row index is not within matrix bounds." << std::endl;
         }
-        if (j > this->_ncols) {
-            std::cerr << "Error: Desired col index is not within matrix bounds." <<  std::endl;   
+        if (j > this->_ncols)
+        {
+            std::cerr << "Error: Desired col index is not within matrix bounds." << std::endl;
         }
         iloc = this->rowPtrs[i];
-        rowl = this->rowPtrs[i+1] - this->rowPtrs[i];
-        
-        for (size_t jj=this->colIdx[iloc]; jj < rowl; j++){
+        rowl = this->rowPtrs[i + 1] - this->rowPtrs[i];
+
+        for (size_t jj = this->colIdx[iloc]; jj < rowl; j++)
+        {
             // If the desired row, col has a non-zero change the *Val to that value
-            if (jj == j){
+            if (jj == j)
+            {
                 *Val = value[jj];
-            } 
+            }
         }
-    }   
+    }
 
     template class SparseMatrix_CSR<float>;
     template class SparseMatrix_CSR<double>;

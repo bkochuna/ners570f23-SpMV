@@ -34,10 +34,9 @@ TEST_CASE(getCoefTest) {
 
   SpMV::SparseMatrix_DEN<T> AD = SpMV::SparseMatrix_DEN<T>(5,5);
 
-  T aij = 3.67;
-  AD.setCoefficient_DEN(3,2,aij);
+  AD.setCoefficient_DEN(2,4,static_cast<T>(3.14));
 
-  ASSERT_NEAR(AD.getCoef(3,2) == aij);
+  ASSERT_NEAR(AD.getCoef_DEN(2,4), static_cast<T>(3.14), static_cast<T>(1e-3));
 
 }
 
@@ -47,8 +46,7 @@ template <typename T>
 TEST_CASE(getCoefInitTest) {
 
   SpMV::SparseMatrix_DEN<T> AD = SpMV::SparseMatrix_DEN<T>(5,5);
-
-  ASSERT_NEAR(AD.getCoef(3,2) == 0.0);// all values should be initialized to zero
+  ASSERT_NEAR(AD.getCoef(2,4), static_cast<T>(0.0),static_cast>T>(1e-3));
 
 }
 
@@ -59,8 +57,8 @@ TEST_CASE(getFormatTest) {
 
   SpMV::SparseMatrix_DEN<T> AD = SpMV::SparseMatrix_DEN<T>(3,3);
 
-  string frmt_String = "DEN";
-  ASSERT(AD.getFormat() == frmt_String);
+  string fmt_String = "DEN";
+  ASSERT(AD.getFormat() == fmt_String);
 
 }
 

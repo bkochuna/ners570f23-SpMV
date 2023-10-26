@@ -14,7 +14,6 @@ string(CONCAT GNU_WARNING_FLAGS
     " -Wshadow"
     " -Wundef"
     " -Wunused"
-    " -Wuseless-cast"
     " -Wvla"
     " -Wzero-as-null-pointer-constant"
     " -pedantic"

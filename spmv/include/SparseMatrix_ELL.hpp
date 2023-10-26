@@ -19,6 +19,7 @@ namespace SpMV
 
     public:
         SparseMatrix_ELL(const int nrows, const int ncols);
+        ~SparseMatrix_ELL();
         void setCoefficient(const size_t row, const size_t col, const fp_type aij);
         void assembleStorage() {};
         void matvec(fp_type *vecin, fp_type *vecout);

@@ -30,7 +30,7 @@ TEST_CASE(testcase){
 	// Assign values
 	result[0] = static_cast<T>(7);
 	result[1] = static_cast<T>(6);
-	result[2] = static_cast<T>(23);
+	result[2] = static_cast<T>(19);
         test_matrix->matvec(vecin,vecout);
 
 	for (size_t i=0; i<test_matrix->getNumRows(); i++)
@@ -67,7 +67,7 @@ TEST_CASE(case_double){
         // Assign values
         result[0] = 7.0;
         result[1] = 6.0;
-        result[2] = 23.0;
+        result[2] = 19.0;
         test_matrix->matvec(vecin,vecout);
 
         for (size_t i=0; i<test_matrix->getNumRows(); i++)

@@ -56,6 +56,23 @@ namespace SpMV
         return rowLengths[this->_nrows-1];
     }
 
+    template <class fp_type>
+    void SparseMatrix_ELL<fp_type>::ELL_view() {
+            std::ofstream outputFile("ELL.matout");
+            if (!outputFile.is_open()){
+                std::cerr << "Unable to open the file for writing." << std::endl;
+                return;
+            }
+
+            for (size_t i = 0; i < this->_nrowsmax*this->_nrows; i++){
+                 if (val[i] != 0){
+                     outputFile << colIdx[i] << "," << val[i] << " ";    
+                     }
+                outputFile << std::endl;
+            }
+        outputFile.close();
+    }
+
     template class SparseMatrix_ELL<float>;
     template class SparseMatrix_ELL<double>;
 }

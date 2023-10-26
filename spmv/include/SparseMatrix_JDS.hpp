@@ -23,7 +23,7 @@ namespace SpMV
 
         // overloaded constructor
         SparseMatrix_JDS(const int nrows, const int ncols);
-
+        virtual ~SparseMatrix_JDS();
         // SparseMatrix_JDS(const int nrows, const int ncols);
         void assembleStorage() {};
         void disaaembleStorage() {};

@@ -1,5 +1,4 @@
 #include <SpMV.hpp>
-#include <SparseMatrix_DEN.hpp>
 #include <vector> // std::vector
 #include <string>
 #include <stdlib.h>

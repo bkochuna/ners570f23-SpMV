@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 // Testing library required for testing (Always include this last!)
-#include "unit_test_framework.hpp"
+#include "unit_test_framework_updated.hpp"
 
 
 // Test for number of rows

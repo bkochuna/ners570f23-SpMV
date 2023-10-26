@@ -31,6 +31,9 @@ namespace SpMV
         if(this->_state!=assembled){
             throw std::runtime_error("Matrix must be assembled before its values are accessed");
         }
+        if(row>this->_nrows||col>this->_ncols){
+            throw std::runtime_error("Indices specified are out of bounds");
+        }
 
         fp_type output = 0;
         for (size_t i=0;i<_nrowsmax;i++){
@@ -56,22 +59,22 @@ namespace SpMV
         return rowLengths[this->_nrows-1];
     }
 
-    template <class fp_type>
-    void SparseMatrix_ELL<fp_type>::ELL_view() {
-            std::ofstream outputFile("ELL.matout");
-            if (!outputFile.is_open()){
-                std::cerr << "Unable to open the file for writing." << std::endl;
-                return;
-            }
+    // template <class fp_type>
+    // void SparseMatrix_ELL<fp_type>::ELL_view() {
+    //         std::ofstream outputFile("ELL.matout");
+    //         if (!outputFile.is_open()){
+    //             std::cerr << "Unable to open the file for writing." << std::endl;
+    //             return;
+    //         }
 
-            for (size_t i = 0; i < this->_nrowsmax*this->_nrows; i++){
-                 if (val[i] != 0){
-                     outputFile << colIdx[i] << "," << val[i] << " ";    
-                     }
-                outputFile << std::endl;
-            }
-        outputFile.close();
-    }
+    //         for (size_t i = 0; i < this->_nrowsmax*this->_nrows; i++){
+    //              if (val[i] != 0){
+    //                  outputFile << colIdx[i] << "," << val[i] << " ";    
+    //                  }
+    //             outputFile << std::endl;
+    //         }
+    //     outputFile.close();
+    // }
 
     template class SparseMatrix_ELL<float>;
     template class SparseMatrix_ELL<double>;

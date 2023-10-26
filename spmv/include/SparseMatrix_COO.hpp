@@ -21,7 +21,8 @@ namespace SpMV
 	SparseMatrix_COO();
         SparseMatrix_COO(const int nrows, const int ncols);
 	~SparseMatrix_COO();
-        void assembleStorage() {};
+        void assembleStorage();
+	fp_type** disassembleStorage();
         void matvec(fp_type* vecin, fp_type* vecout);
 
         //getter functions

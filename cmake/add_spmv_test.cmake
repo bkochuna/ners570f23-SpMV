@@ -3,14 +3,23 @@ macro(add_spmv_test FILENAME)
   set(TESTNAME ${FILENAME})
   get_filename_component(TESTNAME ${TESTNAME} NAME_WE)
   get_filename_component(TESTNAME ${TESTNAME} NAME_WLE)
-  # Prepend "test_" to the test name
-  set(TESTNAME "test_${TESTNAME}")
 
-  add_executable(${TESTNAME} ${FILENAME})
+  # Add a float version and a double version of the test
+  set(TESTNAME_FLOAT "${TESTNAME}_float")
+  set(TESTNAME_DOUBLE "${TESTNAME}_double")
+  
+  add_executable(${TESTNAME_FLOAT} ${FILENAME})
+  add_executable(${TESTNAME_DOUBLE} ${FILENAME})
 
-  target_link_libraries(${TESTNAME} PRIVATE spmv) 
+  target_link_libraries(${TESTNAME_FLOAT} PRIVATE spmv)
+  target_link_libraries(${TESTNAME_DOUBLE} PRIVATE spmv)
 
-  add_test(${TESTNAME} ${TESTNAME})
+  target_compile_definitions(${TESTNAME_FLOAT} PRIVATE -D__SPMV_FPTYPE__=float)
+  target_compile_definitions(${TESTNAME_DOUBLE} PRIVATE -D__SPMV_FPTYPE__=double)
 
-  set_target_properties(${TESTNAME} PROPERTIES CXX_STANDARD ${CMAKE_CXX_STANDARD})
+  add_test(${TESTNAME_FLOAT} ${TESTNAME_FLOAT})
+  add_test(${TESTNAME_DOUBLE} ${TESTNAME_DOUBLE})
+
+  set_target_properties(${TESTNAME_FLOAT} PROPERTIES CXX_STANDARD ${CMAKE_CXX_STANDARD})
+  set_target_properties(${TESTNAME_DOUBLE} PROPERTIES CXX_STANDARD ${CMAKE_CXX_STANDARD})
 endmacro()

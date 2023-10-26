@@ -22,6 +22,6 @@ namespace SpMV
         void assembleStorage() {};
         fp_type getCoefficient(size_t i,size_t j);
         std::string getFormat() const { return _format; };
-        void View();
+    
     };
 }

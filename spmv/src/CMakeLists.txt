@@ -1,7 +1,6 @@
 
 add_library(spmv
     SparseMatrix.cpp
-    SparseMatrix_COO.cpp
     SparseMatrix_ELL.cpp
 )
 

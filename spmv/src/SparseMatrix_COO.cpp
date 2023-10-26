@@ -158,7 +158,7 @@ namespace SpMV
 		    return;
 	    }
 
-        outputFile << "[";
+        // outputFile << "[";
         for (size_t i = 0; i < this->_nnz; i++)
         {
             {
@@ -166,7 +166,7 @@ namespace SpMV
             }
             outputFile << std::endl;
         }
-        outputFile << "]";
+        // outputFile << "]";
         outputFile.close();
     }
 

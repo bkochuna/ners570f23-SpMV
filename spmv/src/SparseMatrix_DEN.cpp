@@ -152,7 +152,7 @@ namespace SpMV
 
 
     template <class fp_type>
-    SparseMatrix<fp_type>::~SparseMatrix_DEN()
+    SparseMatrix_DEN<fp_type>::~SparseMatrix_DEN()
     {
         std::cout << "Goodbye from SparseMatrix Destructor!" << std::endl;
         delete(A);

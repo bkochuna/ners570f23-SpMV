@@ -37,9 +37,9 @@ namespace SpMV{
         test_matrix->setCoefficient(3,0,-3);
         test_matrix->setCoefficient(3,3,3);
         test_matrix->assembleStorage();
-        // Here I use -10000 for padding index 
-        std::vector<float> true_colidx{ 0, 0, 0, 0, -10000,1,1,3,-10000,-10000,2,-10000 };
-        std::vector<float> true_value{ -1, 5, 6, -3, -10000, -7, 4, 3, -10000,-10000,2,-10000 };
+        // Here I use -1 for padding index 
+        std::vector<float> true_colidx{ 0, 0, 0, 0, -1,1,1,3,-1,-1,2,-1 };
+        std::vector<float> true_value{ -1, 5, 6, -3, 0, -7, 4, 3, 0,0,2,0 };
         for (size_t i = 0; i < 12; i++) {
             ASSERT_NEAR(true_colidx[i], this->colIdx[i], 1e-4); 
             ASSERT_NEAR(true_value[i], this->val[i], 1e-4); 

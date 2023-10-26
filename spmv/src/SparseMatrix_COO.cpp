@@ -1,4 +1,5 @@
 #include "SparseMatrix_COO.hpp"
+#include <fstream>
 
 #include <iostream>
 
@@ -157,31 +158,32 @@ namespace SpMV
 		    return;
 	    }
 
-	    outputFile << "[";
-	    for (size_t i=0;i < this->_nnz;i++) {
-		    {
-			  << I[i] << "," << J[i] << "," << val[i] << "\t";
-		}
-	    outputFile<<std::endl;
-	    }
-	    outputFile << "]";
-	    outputFile.close();
-
+        outputFile << "[";
+        for (size_t i = 0; i < this->_nnz; i++)
+        {
+            {
+                outputFile << I[i] << "," << J[i] << "," << val[i] << "\t";
+            }
+            outputFile << std::endl;
+        }
+        outputFile << "]";
+        outputFile.close();
     }
 
     template <class fp_type>
     fp_type SparseMatrix_COO<fp_type>::operator()(const size_t row, const size_t col)
     {
-        if(this->_state!=assembled){
+        if (this->_state != assembled)
+        {
             throw std::runtime_error("Matrix must be assembled before its values are accessed");
         }
         if (col >= this->_ncols || row >= this->_nrows)
         {
-            std::cout << "Specified matrix indices are not within the bounds of the matrix" << std::endl;	
+            std::cout << "Specified matrix indices are not within the bounds of the matrix" << std::endl;
             exit(1);
         }
 
-        return this->_buildCoeff[{row , col}];
+        return this->_buildCoeff[{row, col}];
     }
 
     template <class fp_type>

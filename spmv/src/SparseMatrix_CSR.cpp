@@ -197,7 +197,7 @@ namespace SpMV
     // Get coefficient at index (i,j), returns zero if no coefficient is present
     // - Max Herzog (maxzog)
     template <class fp_type>
-    void SparseMatrix_CSR<fp_type>::getCoef(size_t i, size_t j, fp_type* Val){
+    void SparseMatrix_CSR<fp_type>::getCoefficient(size_t i, size_t j, fp_type* Val){
         size_t iloc; // row to access
         size_t rowl; // nnz per row
 

@@ -35,7 +35,7 @@ namespace SpMV
         size_t      getNumCols();
         size_t      getNumNonZeros();
         MatrixState getState();
-
+        void COO_view()
         //setter functions
         void setCoefficient(const size_t row, const size_t col, const fp_type aij);
     };

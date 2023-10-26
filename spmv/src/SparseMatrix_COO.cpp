@@ -95,6 +95,29 @@ namespace SpMV
         return value;
     }
 
+    // View COO matrix (Optionally as a Dense matrix)
+    template <class fp_type>
+    void SparseMatrix_COO<fp_type>::COO_view() {
+	    
+        
+        std::ofstream outputFile("COO.out");
+	    if (!outputFile.is_open()) {
+		    std::cerr << "Error: Could not open file for writing." << std::endl;
+		    return;
+	    }
+
+	    outputFile << "[";
+	    for (size_t i=0;i < this->_nnz;i++) {
+		    {
+			  << I[i] << "," << J[i] << "," << val[i] << "\t";
+		}
+	    outputFile<<std::endl;
+	    }
+	    outputFile << "]";
+	    outputFile.close();
+
+    }
+
     template <class fp_type>
     fp_type SparseMatrix_COO<fp_type>::operator()(const size_t row, const size_t col)
     {

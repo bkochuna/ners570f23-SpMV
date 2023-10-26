@@ -34,8 +34,9 @@ TEST_CASE(getCoefTest) {
   SpMV::SparseMatrix_CSR<T> Af = SpMV::SparseMatrix_CSR<T>(5,5);
 
   Af.setCoefficient(3,2,static_cast<T>(3.67));
-
-  ASSERT_NEAR(Af.getCoef(3,2), static_cast<T>(3.67), static_cast<T>(1e-3));
+  T* coeff = new T();
+  Af.getCoefficient(3,2,coeff);
+  ASSERT_NEAR(*coeff, static_cast<T>(3.67), static_cast<T>(1e-3));
 
 }
 
@@ -45,8 +46,9 @@ template <typename T>
 TEST_CASE(getCoefInitTest) {
 
   SpMV::SparseMatrix_CSR<T> Af = SpMV::SparseMatrix_CSR<T>(5,5);
-
-  ASSERT_NEAR(Af.getCoef(3,2), static_cast<T>(0.0), static_cast<T>(1e-3));
+  T* coeff = new T();
+  Af.getCoefficient(3,2,coeff);
+  ASSERT_NEAR(*coeff, static_cast<T>(0.0), static_cast<T>(1e-3));
 
 }
 

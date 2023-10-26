@@ -51,17 +51,12 @@ TEST_CASE(compareVectors) {
   }
 }
 
-// Create a test suite
-TEST_SUITE(my_suite) {
-  // Run the unit test when the suite is run
-  TEST(compareVectors);
-}
+
 
 // Test for getFormat
-template <typename T>
 TEST_CASE(getFormatTest) {
 
-  SpMV::SparseMatrix_CSR<T> Af = SpMV::SparseMatrix_CSR<T>(3,3);
+  SpMV::SparseMatrix_CSR<fp_type> Af = SpMV::SparseMatrix_CSR<fp_type>(3,3);
 
   string frmt_String = "CSR";
   ASSERT(Af.getFormat() == frmt_String);
@@ -69,33 +64,33 @@ TEST_CASE(getFormatTest) {
 }
 
 // Test for CSR_View_Func
-template <typename T>
+
 TEST_CASE(ViewFuncTest) {
 
     const string pathname = "./Test_CSR_view.txt";
-    SpMV::SparseMatrix_CSR<T> Af = SpMV::SparseMatrix_CSR<T>(4, 4);
+    SpMV::SparseMatrix_CSR<fp_type> Af = SpMV::SparseMatrix_CSR<fp_type>(4, 4);
 
     // Example of the HW2 instructions of CSR format
     // Set Coefficients & View (Saved as file in <pathname>)
-    Af.setCoefficient(0, 0, T(1.));
-    Af.setCoefficient(1, 3, T(9.));
-    Af.setCoefficient(0, 1, T(7.));
-    Af.setCoefficient(2, 1, T(2.));
-    Af.setCoefficient(2, 2, T(8.));
-    Af.setCoefficient(3, 3, T(6.));
-    Af.setCoefficient(1, 0, T(5.));
-    Af.setCoefficient(1, 2, T(3.));
+    Af.setCoefficient(0, 0, fp_type(1.));
+    Af.setCoefficient(1, 3, fp_type(9.));
+    Af.setCoefficient(0, 1, fp_type(7.));
+    Af.setCoefficient(2, 1, fp_type(2.));
+    Af.setCoefficient(2, 2, fp_type(8.));
+    Af.setCoefficient(3, 3, fp_type(6.));
+    Af.setCoefficient(1, 0, fp_type(5.));
+    Af.setCoefficient(1, 2, fp_type(3.));
     Af.CSR_view(pathname);
 
     // To read the results of "View" and check
     int indx[8] = {0, 0, 1, 1, 1, 2, 2, 3};
     int jndx[8] = {0, 1, 0, 2, 3, 1, 2, 3};
-    T rval[8] = {T(1.), T(7.), T(5.), T(3.), 
-                T(9.), T(2.), T(8.), T(6.)};
+    fp_type rval[8] = {fp_type(1.), fp_type(7.), fp_type(5.), fp_type(3.), 
+                fp_type(9.), fp_type(2.), fp_type(8.), fp_type(6.)};
     
     string line;
     int k = 0, idx = 0, jdx;
-    T value;
+    fp_type value;
     ifstream ViewResults(pathname);
     while (getline(ViewResults, line)){
         
@@ -103,12 +98,12 @@ TEST_CASE(ViewFuncTest) {
         istringstream iss(line);
         while(iss >> value){
             if (idx==indx[k] and jdx==jndx[k]){
-                ASSERT_NEAR(value, T(rval[k]), T(1.E-6));
+                ASSERT_NEAR(value, fp_type(rval[k]), fp_type(1.E-6));
                 // cout << k << rval[k] << endl;
                 k++;
             } else {
                 // cout << k << value << endl;
-                ASSERT_NEAR(value, T(0.), T(1.E-6));
+                ASSERT_NEAR(value, fp_type(0.), fp_type(1.E-6));
             }
             jdx++;
         }
@@ -117,21 +112,13 @@ TEST_CASE(ViewFuncTest) {
 
 }
 
-template <typename T>
-TEST_SUITE(CSR_View_Tests) {
-  TEST(getFormatTest<T>);
-  TEST(ViewFuncTest<T>);
-}
+
 
 auto
 main() -> int
 {
-  // Run the unit tests. If a test fails, the program will print failure info
-  // and return 1.
-  RUN_SUITE(my_suite);
-//   RUN_SUITE(CSR_View_Tests<int>);
-//   RUN_SUITE(CSR_View_Tests<long>);
-  RUN_SUITE(CSR_View_Tests<float>);
-  RUN_SUITE(CSR_View_Tests<double>);
+
+  TEST(ViewFuncTest);
+  TEST(getFormatTest);
   return 0; 
 }

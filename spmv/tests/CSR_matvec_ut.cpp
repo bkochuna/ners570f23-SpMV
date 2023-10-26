@@ -20,7 +20,6 @@ namespace SpMV{
 
     }
 
-    template <typename fp_type>
     TEST_CASE(empty_in) 
     {
         try{
@@ -35,7 +34,7 @@ namespace SpMV{
         }
         // update implementation for templating
     }
-    template <typename fp_type>
+
     TEST_CASE(vec_in) 
     {
         
@@ -52,16 +51,12 @@ namespace SpMV{
         
         // update implementation for templating
     }
-    template <typename fp_type>
-    TEST_SUITE(matvec_suite) {
-        TEST(empty_in<fp_type>);
-        TEST(vec_in<fp_type>);
-    }
+
     
 }
 int main(){
-    RUN_SUITE(SpMV::matvec_suite<float>);
-    RUN_SUITE(SpMV::matvec_suite<double>);
+    TEST(SpMV::vec_in);
+    TEST(SpMV::empty_in);
     return 0; 
 }
 

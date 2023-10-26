@@ -107,5 +107,7 @@ main() -> int
   RUN_SUITE(my_suite);
   RUN_SUITE(add_sub_suite<int>);
   RUN_SUITE(add_sub_suite<size_t>);
+  
+  // RUN_SUITE()
   return 0; 
 }

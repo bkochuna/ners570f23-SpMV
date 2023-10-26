@@ -33,59 +33,72 @@ namespace SpMV
     }
 
     template <class fp_type>
-    void SparseMatrix_CSR<fp_type>::assembleStorage(const std::vector<std::vector<fp_type>> &matrix)
+    void SparseMatrix_CSR<fp_type>::assembleStorage()
     {
-        // calculate _nnz if not already set
-        // int _nnz = 0;
-        // for (const auto &row : matrix)
-        // {
-        //     for (const auto &val : row)
-        //     {
-        //         if (val != 0)
-        //             _nnz++;
-        //     }
-        // }
-
-        // If there was a previous allocation, delete it
+        // If there was a previous allocation, delete it to prevent memory leaks.
         delete[] this->colIdx;
         delete[] this->value;
         delete[] this->rowPtrs;
 
+        // The total number of non-zero elements is the size of _buildCoeff.
+        this->_nnz = this->_buildCoeff.size();
+
+        // Allocate memory for CSR format.
         this->rowPtrs = new size_t[this->_nrows + 1];
         this->colIdx = new size_t[this->_nnz];
         this->value = new fp_type[this->_nnz];
 
-        int idx = 0;  // Index for colIdx and value
-        int rptr = 0; // Index for rowPtrs
-        for (const auto &row : matrix)
+        int idx = 0;         // Index for colIdx and value arrays.
+        int rptr = 0;        // Index for rowPtrs array.
+        size_t last_row = 0; // To keep track of the last accessed row.
+
+        // Loop over each non-zero entry in the matrix.
+        for (const auto &entry : this->_buildCoeff)
+        {
+            // If the current row of entry is greater than the last_row, update rowPtrs.
+            while (last_row < entry.first.first)
+            {
+                this->rowPtrs[rptr++] = idx;
+                last_row++;
+            }
+            // Set the column index and value for the current non-zero element.
+            this->colIdx[idx] = entry.first.second;
+            this->value[idx] = entry.second;
+            idx++;
+        }
+
+        // Fill the remaining rowPtrs entries. It should point to the end of the last row.
+        while (rptr <= this->_nrows)
         {
             this->rowPtrs[rptr++] = idx;
-            for (size_t j = 0; j < row.size(); ++j)
-            {
-                if (row[j] != 0)
-                {
-                    this->colIdx[idx] = j;
-                    this->value[idx] = row[j];
-                    idx++;
-                }
-            }
         }
-        rowPtrs[rptr] = idx;
     }
 
     template <class fp_type>
-    void SparseMatrix_CSR<fp_type>::disassembleStorage(const std::vector<std::vector<fp_type>> &matrix)
+    void SparseMatrix_CSR<fp_type>::disassembleStorage()
     {
-        matrix.clear();
-        matrix.resize(this->_nrows, std::vector<fp_type>(this->_ncols, 0));
+        // Clear any existing data in the _buildCoeff map.
+        this->_buildCoeff.clear();
 
+        // Convert the CSR format back to the dense format.
         for (int i = 0; i < this->_nrows; ++i)
         {
+            // Using rowPtrs, get the range of non-zero elements in the row.
             for (size_t j = this->rowPtrs[i]; j < this->rowPtrs[i + 1]; ++j)
             {
-                matrix[i][this->colIdx[j]] = this->value[j];
+                // Add the non-zero values to the _buildCoeff map.
+                this->_buildCoeff[{i, this->colIdx[j]}] = this->value[j];
             }
         }
+
+        // Release the memory used for the CSR format.
+        delete[] this->colIdx;
+        delete[] this->value;
+        delete[] this->rowPtrs;
+
+        this->colIdx = nullptr;
+        this->value = nullptr;
+        this->rowPtrs = nullptr;
     }
 
     template <class fp_type>

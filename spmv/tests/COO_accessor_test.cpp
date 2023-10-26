@@ -35,8 +35,6 @@ TEST_CASE(getCoefTest) {
 
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wfloat-equal"
-  #pragma GCC diagnostic ignored "-Werror=float-conversion"
-  #pragma GCC diagnostic ignored "-Werror=double-promotion"
 
   T aij = 3.67;
   Af.setCoefficient(3,2,aij);
@@ -54,8 +52,6 @@ TEST_CASE(getCoefInitTest) {
 
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wfloat-equal"
-  #pragma GCC diagnostic ignored "-Werror=float-conversion"
-  #pragma GCC diagnostic ignored "-Werror=double-promotion"
 
   SpMV::SparseMatrix_COO<T> Af = SpMV::SparseMatrix_COO<T>(5,5);
 

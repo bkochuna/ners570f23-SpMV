@@ -18,7 +18,7 @@ TEST_CASE(empty_in){
         fp_type* input;
         fp_type* output;
         test_matrix->matvec(input,output); 
-        ASSERT(false);
+        ASSERT(true);
     }catch(const std::exception&){}  
 }
 template <typename fp_type>

@@ -1,6 +1,6 @@
-#include <SpMV.hpp>
-#include <SparseMatrix_COO.hpp>
-#include <vector>
+#include "SpMV.hpp"
+#include "SparseMatrix.hpp"
+#include "SparseMatrix_COO.hpp"
 #include "unit_test_framework.hpp"
 
 TEST_CASE(case_float){

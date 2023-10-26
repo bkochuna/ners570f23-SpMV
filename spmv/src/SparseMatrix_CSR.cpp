@@ -18,8 +18,8 @@ namespace SpMV
 
         this->colIdx = new size_t[this->_nnz];
         this->value = new fp_type[this->_nnz];
-        this->nrows = new size_t[nrows];
-        this->ncols = new size_t[ncols];
+        this->_nrows = nrows;
+        this->_ncols = ncols;
     }
 
     // Returns string denoting the sparse matrix storage format
@@ -31,6 +31,7 @@ namespace SpMV
         return "CSR";
     }
 
+    /*
     template <class fp_type>
     void SparseMatrix_CSR<fp_type>::assembleStorage(const std::vector<std::vector<fp_type>> &matrix)
     {
@@ -60,21 +61,22 @@ namespace SpMV
         }
         rowPtrs[rptr] = idx;
     }
+    */
+    
+    // template <class fp_type>
+    // void SparseMatrix_CSR<fp_type>::disassembleStorage(std::vector<std::vector<fp_type>>& matrix)
+    // {
+    //     matrix.clear();
+    //     matrix.resize(this->nrows, std::vector<fp_type>(this->ncols, 0));
 
-    template <class fp_type>
-    void SparseMatrix_CSR<fp_type>::disassembleStorage(std::vector<std::vector<fp_type>> &matrix)
-    {
-        matrix.clear();
-        matrix.resize(this->nrows, std::vector<fp_type>(this->ncols, 0));
-
-        for (int i = 0; i < this->nrows; ++i)
-        {
-            for (size_t j = this->rowPtrs[i]; j < this->rowPtrs[i + 1]; ++j)
-            {
-                matrix[i][this->colIdx[j]] = this->value[j];
-            }
-        }
-    }
+    //     for (int i = 0; i < this->nrows; ++i)
+    //     {
+    //         for (size_t j = this->rowPtrs[i]; j < this->rowPtrs[i + 1]; ++j)
+    //         {
+    //             matrix[i][this->colIdx[j]] = this->value[j];
+    //         }
+    //     }
+    // }
 
     template <class fp_type>
     void SparseMatrix_CSR<fp_type>::setCoefficient(const size_t row, const size_t col, const fp_type aij)
@@ -168,14 +170,15 @@ namespace SpMV
             std::cerr << "Error: Could not open the file for writing." << std::endl;
             return;
         }
+        cout << filename << endl;
         
-        outputFile << "[ ";
-        for (int i = 0; i < this->_nrows; i++) {
-            for (int j = 0; j < this->_ncols; j++) {
+        // outputFile << "[ ";
+        for (size_t i = 0; i < this->_nrows; i++) {
+            for (size_t j = 0; j < this->_ncols; j++) {
                 int columnIdx = -1;
                 for (size_t k = this->rowPtrs[i]; k < this->rowPtrs[i + 1]; k++) {
                     if (this->colIdx[k] == j) {
-                        columnIdx = k;
+                        columnIdx = static_cast<int>(k);
                         break;
                     }
                 }
@@ -187,7 +190,7 @@ namespace SpMV
             }
             outputFile << std::endl;
         }
-        outputFile << "]";
+        // outputFile << "]";
     
         outputFile.close();
     }
@@ -195,15 +198,15 @@ namespace SpMV
     // Get coefficient at index (i,j), returns zero if no coefficient is present
     // - Max Herzog (maxzog)
     template <class fp_type>
-    void SparseMatrix_CSR<fp_type>::getCoef(size_t i, size_t j, fp_type *Val){
+    void SparseMatrix_CSR<fp_type>::getCoef(size_t i, size_t j, fp_type& Val){
         size_t iloc; // row to access
         size_t rowl; // nnz per row
 
         Val = 0.0; // set value to zero - only changes if the index (i,j) has a non-zero value
-        if (i > this->nrows) {
+        if (i > this->_nrows) {
             std::cerr << "Error: Desired row index is not within matrix bounds." <<  std::endl;   
         }
-        if (j > this->ncols) {
+        if (j > this->_ncols) {
             std::cerr << "Error: Desired col index is not within matrix bounds." <<  std::endl;   
         }
         iloc = this->rowPtrs[i];
@@ -213,10 +216,10 @@ namespace SpMV
             // If the desired row, col has a non-zero change the *Val to that value
             if (jj == j){
                 Val = value[jj];
-                return 0;    
+                // return 0;    
             } 
         }
-        return 0;     
+        // return 0;     
     }   
 
     template class SparseMatrix_CSR<float>;

@@ -5,6 +5,7 @@
 
 #include "SparseMatrix.hpp"
 #include <string>
+#include <vector>
 
 namespace SpMV
 {
@@ -21,12 +22,13 @@ namespace SpMV
     public:
         // Constructor that takes arguments
         SparseMatrix_CSR(const int nrows, const int ncols);
+        std::string getFormat();
         void setCoefficient(const size_t row, const size_t col, const fp_type aij);
         void CSR_view(const std::string& filename);
-        void assembleStorage() {};
-        void getCoef(size_t i, size_t j, fp_type & Val);
-        std::string getFormat();
-	     void matvec(fp_type* vecin, fp_type* vecout);
+        void getCoef(size_t i, size_t j, fp_type& Val);
+	    void matvec(fp_type* vecin, fp_type* vecout);
+        // void assembleStorage() {};
+        // void disassembleStorage();
     };
 }
 

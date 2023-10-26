@@ -17,12 +17,12 @@ TEST_CASE(case_float){
 	float* vecin = new float[3];
 	float* vecout = new float[3];
 
-	// Initialize the elements of vecin, for example to 1.0. vecout is already initialized in matvec.
+	// Initialize the elements of vecin
 	for (int i = 0; i < 3; i++)
 	{
 	    vecin[i] = static_cast<float>(i)+1.0f;
 	}
-        // Initialize
+        // Initialize result
 	float* result = new float[3];
 
 	// Assign values
@@ -53,12 +53,12 @@ TEST_CASE(case_double){
 	double* vecin = new double[3];
         double* vecout = new double[3];
 
-        // Initialize the elements of vecin, for example to 1.0. vecout is already initialized in matvec.
+        // Initialize the elements of vecin
         for (int i = 0; i < 3; i++)
         {
             vecin[i] = static_cast<double>(i)+1.0;
         }
-        // Initialize
+        // Initialize result
         double* result = new double[3];
 
         // Assign values
@@ -76,7 +76,7 @@ TEST_CASE(case_double){
 
 TEST_SUITE(matvec_suite){
     TEST(case_float);
-    //TEST(case_double);
+    TEST(case_double);
 }
 
 auto

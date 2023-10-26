@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include <iostream>
+#include <map>
 
 namespace SpMV
 {
@@ -20,14 +21,13 @@ namespace SpMV
         std::cout << "Hello from SparseMatrix_DEN Overloaded Constructor!" << std::endl;
             
         this->A = new fp_type[this->_nrows*this->_ncols];
-        this->nrows = new size_t[nrows];
-        this->ncols = new size_t[ncols];
     }
     
     template <class fp_type>
     void SparseMatrix_DEN<fp_type>::assembleStorage()
     {
 	    assert(this->_state != undefined);
+        this->_state = building;
 
         this->A = new fp_type[this->_nrows*this->_ncols]; //Assemble storage
                 
@@ -37,26 +37,30 @@ namespace SpMV
             }
         }
 
-        std::map<std::pair<size_t, size_t>, fp_type>::iterator it = _buildCoeff.begin();
+        typename std::map<std::pair<size_t, size_t>, fp_type>::iterator it = this->_buildCoeff.begin();
 
         std::pair<size_t,size_t> coordPair;
         fp_type aij = 0;
-        while (it != _buildCoeff.end())
+        while (it != this->_buildCoeff.end())
         {
             coordPair = it->first;
-            aij=getCoef(coordPair.first,coordPair.second)
+            aij=getCoef(coordPair.first,coordPair.second);
             A[coordPair.first*this->_ncols+coordPair.second]=aij;
             ++it;
         }
+        this->_state = assembled;
 
     }
 
     template <class fp_type>
     void SparseMatrix_DEN<fp_type>::disassembleStorage()
     {
-        assert(this->_state != undefined);
+        if(this->_state != assembled) {
+            throw std::runtime_error("Matrix must be assembled before it can be disassembled");
+        }
 
         this->A=nullptr; //Disassemble A
+        this->_state = undefined;
 
     }
 
@@ -154,9 +158,11 @@ namespace SpMV
 
 
     template <class fp_type>
-    SparseMatrix<fp_type>::~SparseMatrix()
+    SparseMatrix_DEN<fp_type>::~SparseMatrix_DEN()
     {
         std::cout << "Goodbye from SparseMatrix Destructor!" << std::endl;
+        delete(A);
+        A=nullptr;
     }
 
     template class SparseMatrix_DEN<float>;

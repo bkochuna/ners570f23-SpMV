@@ -12,8 +12,8 @@ namespace SpMV
     class SparseMatrix_DEN : public SparseMatrix<fp_type>
     {
     private:
-        size_t *I    = nullptr;
-        size_t *J    = nullptr;
+        //size_t *I    = nullptr;
+        //size_t *J    = nullptr; I and J should not be required? this is a dense matrix -Noah Zambrano (nzamb222)
         fp_type *A = nullptr;//nrows*ncols array storing the values of the dense matrix
 	//int nrows;
 	//std::map<std::pair<size_t, size_t>, fp_type> _buildCoeff;
@@ -22,6 +22,8 @@ namespace SpMV
     public:
         //default constructor
         SparseMatrix_DEN();
+        //destructor
+        ~SparseMatrix_DEN();
         
         // overloaded constructor
         SparseMatrix_DEN(const int nrows, const int ncols);

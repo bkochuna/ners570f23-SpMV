@@ -170,12 +170,12 @@ namespace SpMV
         }
         
         outputFile << "[ ";
-        for (int i = 0; i < this->_nrows; i++) {
-            for (int j = 0; j < this->_ncols; j++) {
+        for (size_t i = 0; i < this->_nrows; i++) {
+            for (size_t j = 0; j < this->_ncols; j++) {
                 int columnIdx = -1;
                 for (size_t k = this->rowPtrs[i]; k < this->rowPtrs[i + 1]; k++) {
                     if (this->colIdx[k] == j) {
-                        columnIdx = k;
+                        columnIdx = static_cast<int>(k);
                         break;
                     }
                 }

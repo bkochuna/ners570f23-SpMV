@@ -147,7 +147,12 @@ namespace SpMV
         return value;
     }
 
-    // View COO matrix (Optionally as a Dense matrix)
+    // View COO matrix--the current version prints i, j, and values to COO.out 
+    // i1 j1 v1 
+    // .  .  .
+    // .  .  .
+    // .  .  .
+    // innz jnnz vnnz
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::COO_view() {
 	    

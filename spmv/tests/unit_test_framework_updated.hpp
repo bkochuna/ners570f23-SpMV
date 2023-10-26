@@ -11,6 +11,12 @@
 #  error("unit_test_framework.hpp must be included AFTER SpMV.hpp!")
 #endif
 
+#ifdef __SPMV_FPTYPE__
+using fp_type = __SPMV_FPTYPE__;
+#else
+#  error("__SPMV_FPTYPE__ must be defined!")
+#endif
+
 #include <cstdio>  // printf
 #include <cstdlib> // std::abs, exit
 #include <iostream> // std::cout, std::endl
@@ -39,14 +45,7 @@
 
 #define TEST_CASE(name) void name()
 
-#define TEST_SUITE(name) void name()
-
 #define TEST(name)                                                                       \
   printf("Running test case '%s'\n", #name);                                             \
   name();                                                                                \
   printf("Test case '%s' passed\n", #name);
-
-#define RUN_SUITE(suite)                                                                 \
-  printf("Running test suite '%s'\n", #suite);                                           \
-  suite();                                                                               \
-  printf("Test suite '%s' passed\n", #suite);

@@ -33,15 +33,9 @@ TEST_CASE(getCoefTest) {
 
   SpMV::SparseMatrix_COO<T> Af = SpMV::SparseMatrix_COO<T>(5,5);
 
-  #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignored "-Wfloat-equal"
+  Af.setCoefficient(3,2,static_cast<T>(3.67));
 
-  T aij = 3.67;
-  Af.setCoefficient(3,2,aij);
-
-  ASSERT_NEAR(Af.getCoefficient(3,2), aij, 1e-3);
-
-  #pragma GCC diagnostic pop
+  ASSERT_NEAR(Af.getCoefficient(3,2), static_cast<T>(3.67), static_cast<T>(1e-3));
 
 }
 
@@ -50,14 +44,9 @@ TEST_CASE(getCoefTest) {
 template <typename T>
 TEST_CASE(getCoefInitTest) {
 
-  #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignored "-Wfloat-equal"
-
   SpMV::SparseMatrix_COO<T> Af = SpMV::SparseMatrix_COO<T>(5,5);
 
-  ASSERT_NEAR(Af.getCoefficient(3,2), 0.0, 1e-3);
-
-  #pragma GCC diagnostic pop
+  ASSERT_NEAR(Af.getCoefficient(3,2), 0.0, static_cast<T>(1e-3));
 
 }
 

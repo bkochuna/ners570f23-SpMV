@@ -129,7 +129,7 @@ namespace SpMV
 
     // View Dense matrix
     template <class fp_type>
-    void SparseMatrix_DEN<fp_type>::DEN_view(fp_type* A) {
+    void SparseMatrix_DEN<fp_type>::DEN_view() {
 	    
         
         std::ofstream outputFile("DEN.out");

@@ -46,7 +46,7 @@ template <typename T>
 TEST_CASE(getCoefInitTest) {
 
   SpMV::SparseMatrix_DEN<T> AD = SpMV::SparseMatrix_DEN<T>(5,5);
-  ASSERT_NEAR(AD.getCoef(2,4), static_cast<T>(0.0),static_cast>T>(1e-3));
+  ASSERT_NEAR(AD.getCoef(2,4), static_cast<T>(0.0),static_cast<T>(1e-3));
 
 }
 
@@ -57,7 +57,7 @@ TEST_CASE(getFormatTest) {
 
   SpMV::SparseMatrix_DEN<T> AD = SpMV::SparseMatrix_DEN<T>(3,3);
 
-  string fmt_String = "DEN";
+  std::string fmt_String = "DEN";
   ASSERT(AD.getFormat() == fmt_String);
 
 }

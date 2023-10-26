@@ -33,6 +33,7 @@ int main()
   ptr_B->setCoefficient(3,3,6.0);
   ptr_B->setCoefficient(1,0,5.0);
   ptr_B->setCoefficient(1,2,3.0);
+  ptr_B->CSR_view("./ptrB-CSR_view.txt");
   delete(ptr_B);
 
   return 0;

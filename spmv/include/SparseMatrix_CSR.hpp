@@ -27,8 +27,8 @@ namespace SpMV
         void CSR_view(const std::string& filename);
         void getCoef(size_t i, size_t j, fp_type& Val);
 	    void matvec(fp_type* vecin, fp_type* vecout);
-        // void assembleStorage() {};
-        // void disassembleStorage();
+        void assembleStorage();
+        void disassembleStorage();
     };
 }
 

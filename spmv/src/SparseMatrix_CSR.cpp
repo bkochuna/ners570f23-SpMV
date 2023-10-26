@@ -31,9 +31,9 @@ namespace SpMV
         return "CSR";
     }
 
-    /*
+    
     template <class fp_type>
-    void SparseMatrix_CSR<fp_type>::assembleStorage(const std::vector<std::vector<fp_type>> &matrix)
+    void SparseMatrix_CSR<fp_type>::assembleStorage()
     {
 
         // if the nnz is already created in the constructor, delete this:
@@ -44,24 +44,23 @@ namespace SpMV
         //     }
         // }
 
-        int idx = 0;  // Index for colIdx and value
-        int rptr = 0; // Index for rowPtrs
-        for (const auto &row : matrix)
-        {
-            this->rowPtrs[rptr++] = idx;
-            for (size_t j = 0; j < row.size(); ++j)
-            {
-                if (row[j] != 0)
-                {
-                    this->colIdx[idx] = j;
-                    this->value[idx] = row[j];
-                    idx++;
-                }
-            }
-        }
-        rowPtrs[rptr] = idx;
+        // int idx = 0;  // Index for colIdx and value
+        // int rptr = 0; // Index for rowPtrs
+        // for (const auto &row : matrix)
+        // {
+        //     this->rowPtrs[rptr++] = idx;
+        //     for (size_t j = 0; j < row.size(); ++j)
+        //     {
+        //         if (row[j] != 0)
+        //         {
+        //             this->colIdx[idx] = j;
+        //             this->value[idx] = row[j];
+        //             idx++;
+        //         }
+        //     }
+        // }
+        // rowPtrs[rptr] = idx;
     }
-    */
     
     // template <class fp_type>
     // void SparseMatrix_CSR<fp_type>::disassembleStorage(std::vector<std::vector<fp_type>>& matrix)

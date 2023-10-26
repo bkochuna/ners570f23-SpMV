@@ -4,10 +4,11 @@
 
 namespace SpMV{
 
-    void createTestMatrix(SparseMatrix<double>** test_matrix){
+    template <typename fp_type>
+    void createTestMatrix(SparseMatrix_CSR<fp_type>** test_matrix){
         int n_rows = 3;
         int n_cols = 3;
-        (*test_matrix) = new SparseMatrix_CSR<double>(n_rows,n_cols);
+        (*test_matrix) = new SparseMatrix_CSR<fp_type>(n_rows,n_cols);
 
         (*test_matrix)->setCoefficient(0,0,1);
         (*test_matrix)->setCoefficient(1,1,2);
@@ -19,14 +20,14 @@ namespace SpMV{
 
     }
 
-
+    template <typename fp_type>
     TEST_CASE(empty_in) 
     {
         try{
-            SparseMatrix<double>* test_matrix;
+            SparseMatrix_CSR<fp_type>* test_matrix;
             createTestMatrix(&test_matrix);
-            double * input;
-            double * output;
+            fp_type input[2];
+            fp_type output[2];
             test_matrix->matvec(input,output);
             ASSERT(false);
         }catch(const std::runtime_error&){
@@ -34,23 +35,33 @@ namespace SpMV{
         }
         // update implementation for templating
     }
+    template <typename fp_type>
     TEST_CASE(vec_in) 
     {
         
-        SparseMatrix<double>* test_matrix;
+        SparseMatrix_CSR<fp_type>* test_matrix;
         createTestMatrix(&test_matrix);
-        double input[3]={1,0,5};
-        double output[3];
+        fp_type input[3]={1,0,5};
+        fp_type output[3];
+        fp_type output_corr[3] = {1,20,20};
         test_matrix->matvec(input,output);
+        fp_type error = 1e-3f;
         for (size_t i = 0; i < 3; ++i) {
-            ASSERT_NEAR(input[i], output[i], 1e-3); 
+            ASSERT_NEAR(output_corr[i], output[i], error); 
         }
         
         // update implementation for templating
     }
+    template <typename fp_type>
     TEST_SUITE(matvec_suite) {
-        TEST(empty_in);
-        TEST(vec_in);
+        TEST(empty_in<fp_type>);
+        TEST(vec_in<fp_type>);
     }
+    
+}
+int main(){
+    RUN_SUITE(SpMV::matvec_suite<float>);
+    RUN_SUITE(SpMV::matvec_suite<double>);
+    return 0; 
 }
 

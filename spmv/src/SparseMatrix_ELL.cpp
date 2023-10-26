@@ -56,6 +56,28 @@ namespace SpMV
         std::sort(lenrow,lenrow+len);
         return lenrow[_nrows-1];
     }
+    
+
+        // Implementing the matvec function
+    template <class fp_type>
+    void SparseMatrix_ELL<fp_type>::matvec(fp_type* vecin, fp_type* vecout)
+    {
+        for (size_t i = 0; i < this->_nrows; i++)
+        {
+            fp_type sum = 0;
+            for (size_t j = 0; j < _nrowsmax; j++)
+            {
+                size_t k = i + j * this->_nrows;
+                if (colIdx[k] != static_cast<size_t>(-1))
+                {
+                    sum += val[k] * vecin[colIdx[k]];
+                }
+            }
+            vecout[i] = sum;
+        }
+    }
+
+
 
     template class SparseMatrix_ELL<float>;
     template class SparseMatrix_ELL<double>;

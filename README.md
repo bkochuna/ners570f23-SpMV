@@ -27,3 +27,13 @@
     - `getCoefficients(i,j)` gives you the coefficient at row i and column j. The storage must be assembled to used this method.
 
 - you can print the matrix with the `view()` method
+
+## More information on implementation
+- `assembleStorage()` would first call `getLongestRow()` to get the value for `_nrowsmax`. After that define the `colIdx,val` arrays as
+  
+          this->colIdx = new size_t[this->_nrowsmax*this->_nrows];
+          this->val = new fp_type[this->_nrowsmax*this->_nrows];
+  Then assemble `colIdx,val` using the `_buildCoeff` map
+
+- `view()` will use `getCoefficient()` to print out the row, column and value corresponding to every non-zero entry
+  

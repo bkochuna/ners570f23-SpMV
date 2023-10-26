@@ -27,6 +27,7 @@ namespace SpMV
     void SparseMatrix_DEN<fp_type>::assembleStorage()
     {
 	    assert(this->_state != undefined);
+        this->_state = building;
 
         this->A = new fp_type[this->_nrows*this->_ncols]; //Assemble storage
                 
@@ -47,15 +48,19 @@ namespace SpMV
             A[coordPair.first*this->_ncols+coordPair.second]=aij;
             ++it;
         }
+        this->_state = assembled;
 
     }
 
     template <class fp_type>
     void SparseMatrix_DEN<fp_type>::disassembleStorage()
     {
-        assert(this->_state != undefined);
+        if(this->_state != assembled) {
+            throw std::runtime_error("Matrix must be assembled before it can be disassembled");
+        }
 
         this->A=nullptr; //Disassemble A
+        this->_state = undefined;
 
     }
 

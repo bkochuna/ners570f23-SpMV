@@ -22,6 +22,13 @@ namespace SpMV
     }
 
     template <class fp_type>
+    SparseMatrix_ELL<fp_type>::~SparseMatrix_ELL()
+    {
+	    delete(colIdx);
+	    delete(val);
+    }
+
+    template <class fp_type>
     fp_type SparseMatrix_ELL<fp_type>::getCoefficient(const size_t row,const size_t col){
         // This function gets a matrix coefficient value given the row and 
         // column indices. It does this by accessing the sparse storage format.

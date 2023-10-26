@@ -33,10 +33,9 @@ TEST_CASE(getCoefTest) {
 
   SpMV::SparseMatrix_CSR<T> Af = SpMV::SparseMatrix_CSR<T>(5,5);
 
-  T aij = 3.67;
-  Af.setCoefficient(3,2,aij);
+  Af.setCoefficient(3,2,static_cast<T>(3.67));
 
-  ASSERT_NEAR(Af.getCoefficient(3,2) == aij);
+  ASSERT_NEAR(Af.getCoef(3,2), static_cast<T>(3.67), static_cast<T>(1e-3));
 
 }
 
@@ -47,7 +46,7 @@ TEST_CASE(getCoefInitTest) {
 
   SpMV::SparseMatrix_CSR<T> Af = SpMV::SparseMatrix_CSR<T>(5,5);
 
-  ASSERT_NEAR(Af.getCoefficient(3,2) == 0.0);
+  ASSERT_NEAR(Af.getCoef(3,2), static_cast<T>(0.0), static_cast<T>(1e-3));
 
 }
 
@@ -58,7 +57,7 @@ TEST_CASE(getFormatTest) {
 
   SpMV::SparseMatrix_CSR<T> Af = SpMV::SparseMatrix_CSR<T>(3,3);
 
-  string frmt_String = "CSR";
+  std::string frmt_String = "CSR";
   ASSERT(Af.getFormat() == frmt_String);
 
 }

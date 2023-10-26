@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 // Testing library required for testing (Always include this last!)
-#include "unit_test_framework_updated.hpp"
+#include "unit_test_framework.hpp"
 
 
 // Test for number of rows
@@ -35,7 +35,7 @@ TEST_CASE(getCoefTest) {
 
   AD.setCoefficient_DEN(2,4,static_cast<T>(3.14));
 
-  ASSERT_NEAR(AD.getCoef_DEN(2,4), static_cast<T>(3.14), static_cast<T>(1e-3));
+  ASSERT_NEAR(AD.getCoef(2,4), static_cast<T>(3.14), static_cast<T>(1e-3));
 
 }
 

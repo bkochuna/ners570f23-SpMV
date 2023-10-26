@@ -1,4 +1,5 @@
 #include <SpMV.hpp>
+#include <SparseMatrix_COO.hpp>
 #include <vector>
 #include "unit_test_framework.hpp"
 
@@ -35,6 +36,7 @@ TEST_CASE(case_float){
 	{
 		ASSERT_NEAR(vecout[i],result[i],static_cast<float>(1e-3));
 	}
+	delete(test_matrix);
     }catch(const std::exception&){}  
 }
 
@@ -71,6 +73,7 @@ TEST_CASE(case_double){
         {
                 ASSERT_NEAR(vecout[i],result[i],1e-3);
 	}
+        delete(test_matrix);
     }catch(const std::exception&){}
 }
 

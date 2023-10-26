@@ -89,8 +89,13 @@ namespace SpMV
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::matvec(fp_type* vecin, fp_type* vecout)
     {
-        // Matrix-vector multiply method for COO. vecin should have size ncol, vecout should have size nrow 
-        for (size_t i = 0; i < this->_nrows; i++)
+        /* 
+	Matrix-vector multiply method for COO (Ax=b).
+ 	fp_type* vecin is the input 'x' vector and should have length ncols.
+  	fp_type* vecout is the output 'b' vector and should be allocated to have size nrows. Initialization of value is not required.
+	*/
+        
+	for (size_t i = 0; i < this->_nrows; i++)
             vecout[i] = 0.0;
         for (size_t i = 0; i < this->_nnz; i++)
             vecout[I[i]] += val[i] * vecin[J[i]];

@@ -37,7 +37,7 @@ TEST_CASE(building_state_test_2) {
     matrix.setCoefficient(50,50,10.0);
     matrix.assembleStorage();
     matrix.disassembleStorage();
-    ASSERT(matrix.getState() == 2);
+    ASSERT(matrix.getState() == 0);
 }
 
 auto

@@ -16,8 +16,13 @@ int main()
   // New scoping unit. This means variables defined in here, stay here.
   {
     SpMV::SparseMatrix_COO<double> A = SpMV::SparseMatrix_COO<double>(2,2);
+    // std::cout << A.getState() << std::endl;
     A.setCoefficient(1,1,1.0);
-
+    // std::cout << A.getState() << std::endl;
+    // A.assembleStorage();
+    // std::cout << A.getState() << std::endl;
+    // A.disassembleStorage();
+    // std::cout << A.getState() << std::endl;
   }
   ptr_A->setCoefficient(0,3,4.0);
 

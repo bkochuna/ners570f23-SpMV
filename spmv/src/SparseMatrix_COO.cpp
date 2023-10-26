@@ -52,13 +52,13 @@ namespace SpMV
             i++;
         }
         
-        this->_state = initialized;
+        this->_state = assembled;
     }
 
     template <class fp_type>
     fp_type** SparseMatrix_COO<fp_type>::disassembleStorage()
     {
-        if(this->_state != initialized) {
+        if(this->_state != assembled) {
             throw std::runtime_error("Matrix must be assembled before it can be disassembled");
         }
 

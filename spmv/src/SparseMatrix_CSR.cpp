@@ -199,11 +199,11 @@ namespace SpMV
         size_t iloc; // row to access
         size_t rowl; // nnz per row
 
-        Val = 0.0; // set value to zero - only changes if the index (i,j) has a non-zero value
-        if (i > this->nrows) {
+        *Val = 0.0; // set value to zero - only changes if the index (i,j) has a non-zero value
+        if (i > this->_nrows) {
             std::cerr << "Error: Desired row index is not within matrix bounds." <<  std::endl;   
         }
-        if (j > this->ncols) {
+        if (j > this->_ncols) {
             std::cerr << "Error: Desired col index is not within matrix bounds." <<  std::endl;   
         }
         iloc = this->rowPtrs[i];
@@ -212,11 +212,9 @@ namespace SpMV
         for (size_t jj=this->colIdx[iloc]; jj < rowl; j++){
             // If the desired row, col has a non-zero change the *Val to that value
             if (jj == j){
-                Val = value[jj];
-                return 0;    
+                *Val = value[jj];
             } 
         }
-        return 0;     
     }   
 
     template class SparseMatrix_CSR<float>;

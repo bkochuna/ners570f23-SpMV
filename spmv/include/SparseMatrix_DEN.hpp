@@ -36,6 +36,7 @@ namespace SpMV
         fp_type getCoef(const size_t i, const size_t j); //Returns the coefficient value at row and column indexes i and j
 	std::string getFormat(); //Returns the format (DEN) of the matrix
     void DEN_view();
+    ~SparseMatrix_DEN();
 	// End DEN Accessor Functions
     };
 }

@@ -2,7 +2,7 @@
 #include "SparseMatrix_DEN.hpp"
 #include <string>
 #include <stdlib.h>
-
+#include <fstream>
 #include <iostream>
 #include <map>
 

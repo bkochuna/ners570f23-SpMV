@@ -8,7 +8,7 @@
 
 
 // Test for getRows
-template <size_t N,typename T>
+template <const int N,typename T>
 TEST_CASE(getRowsTest) {
 
   SpMV::SparseMatrix_COO<T> Af = SpMV::SparseMatrix_COO<T>(N,2);
@@ -18,7 +18,7 @@ TEST_CASE(getRowsTest) {
 
 
 // Test for getCols
-template <size_t N,typename T>
+template <const int N,typename T>
 TEST_CASE(getColsTest) {
 
   SpMV::SparseMatrix_COO<T> Af = SpMV::SparseMatrix_COO<T>(2,N);
@@ -62,23 +62,21 @@ TEST_CASE(getFormatTest) {
 
 }
 
-
-template <typename T>
-TEST_SUITE(COO_accessor_tests) {
-  TEST((getRowsTest<6,T>));
-  TEST((getColsTest<6,T>));
-  TEST(getCoefTest<T>);
-  TEST(getCoefInitTest<T>);
-  TEST(getFormatTest<T>);
-}
-
-
 auto
 main() -> int
 {
   // Run the unit tests. If a test fails, the program will print failure info
   // and return 1.
-  RUN_SUITE(COO_accessor_tests<float>);
-  RUN_SUITE(COO_accessor_tests<double>);
+  TEST((getRowsTest<6,float>));
+  TEST((getColsTest<6,float>));
+  TEST(getCoefTest<float>);
+  TEST(getCoefInitTest<float>);
+  TEST(getFormatTest<float>);
+
+  TEST((getRowsTest<6,double>));
+  TEST((getColsTest<6,double>));
+  TEST(getCoefTest<double>);
+  TEST(getCoefInitTest<double>);
+  TEST(getFormatTest<double>);
   return 0; 
 }

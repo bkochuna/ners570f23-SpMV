@@ -52,13 +52,13 @@ namespace SpMV
             i++;
         }
         
-        this->_state = initialized;
+        this->_state = assembled;
     }
 
     template <class fp_type>
     fp_type** SparseMatrix_COO<fp_type>::disassembleStorage()
     {
-        if(this->_state != initialized) {
+        if(this->_state != assembled) {
             throw std::runtime_error("Matrix must be assembled before it can be disassembled");
         }
 
@@ -89,8 +89,13 @@ namespace SpMV
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::matvec(fp_type* vecin, fp_type* vecout)
     {
-        // Matrix-vector multiply method for COO. vecin should have size ncol, vecout should have size nrow 
-        for (size_t i = 0; i < this->_nrows; i++)
+        /* 
+	Matrix-vector multiply method for COO (Ax=b).
+ 	fp_type* vecin is the input 'x' vector and should have length ncols.
+  	fp_type* vecout is the output 'b' vector and should be allocated to have size nrows. Initialization of value is not required.
+	*/
+        
+	for (size_t i = 0; i < this->_nrows; i++)
             vecout[i] = 0.0;
         for (size_t i = 0; i < this->_nnz; i++)
             vecout[I[i]] += val[i] * vecin[J[i]];
@@ -147,7 +152,12 @@ namespace SpMV
         return value;
     }
 
-    // View COO matrix (Optionally as a Dense matrix)
+    // View COO matrix--the current version prints i, j, and values to COO.out 
+    // i1 j1 v1 
+    // .  .  .
+    // .  .  .
+    // .  .  .
+    // innz jnnz vnnz
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::COO_view() {
 	    
@@ -158,7 +168,7 @@ namespace SpMV
 		    return;
 	    }
 
-        outputFile << "[";
+        // outputFile << "[";
         for (size_t i = 0; i < this->_nnz; i++)
         {
             {
@@ -166,7 +176,7 @@ namespace SpMV
             }
             outputFile << std::endl;
         }
-        outputFile << "]";
+        // outputFile << "]";
         outputFile.close();
     }
 

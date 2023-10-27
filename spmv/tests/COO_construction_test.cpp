@@ -26,18 +26,14 @@ TEST_CASE(matrix_type) {
     ASSERT(matrix.getFormat() == "COO");
 }
 
-// Create a test suite
-template <typename T>
-TEST_SUITE(construction) {
-    TEST(matrix_row_size<T>);
-    TEST(matrix_col_size<T>);
-    TEST(matrix_type<T>);
-}
-
 auto
 main() -> int
 {
-    RUN_SUITE(construction<float>);
-    RUN_SUITE(construction<double>);
+    TEST(matrix_row_size<float>);
+    TEST(matrix_col_size<float>);
+    TEST(matrix_type<float>);
+    TEST(matrix_row_size<double>);
+    TEST(matrix_col_size<double>);
+    TEST(matrix_type<double>);
     return 0; 
 }

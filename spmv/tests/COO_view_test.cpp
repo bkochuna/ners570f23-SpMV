@@ -80,22 +80,12 @@ TEST_CASE(Uppertri) {
     }
 }
 
-
-
-// Create a test suite
-template <typename T>
-TEST_SUITE(my_suite) {
-  // Run the unit test when the suite is run
-  TEST(Diagonal<T>);
-  TEST(Uppertri<T>);
-
-}
-
 auto
 main() -> int
 {
   // Run the unit tests. If a test fails, the program will print failure info
   // and return 1.
-  RUN_SUITE(my_suite<double>);
+  TEST(Diagonal<double>);
+  TEST(Uppertri<double>);
   return 0;
 }

@@ -27,7 +27,7 @@ namespace SpMV
         SparseMatrix_DEN(const int nrows, const int ncols);
         void assembleStorage();
 	void disassembleStorage();
-	void Matmul() {};
+	void matvec(fp_type* vecin, fp_type* vecout);
 	// DEN Accessor Functions
 	
 	[[gnu::pure]] size_t getNumRows_DEN(); //Returns the number of rows

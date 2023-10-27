@@ -174,6 +174,11 @@ namespace SpMV
             throw std::runtime_error("Matrix must be assembled before matvec can be performed");
         }
 
+	// Check that the matrix and vector sizes are compatible:
+	if((this->_ncols != vecin.size()) || (this->_nrows != vecout.size())) {
+		throw std::runtime_error("Matrix and vector sizes are incompatible");
+	}
+
         // Perform the matvec operations:
         for (size_t rownum = 0; rownum < this->_nrows + 1; rownum++)
         {

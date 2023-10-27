@@ -169,14 +169,12 @@ namespace SpMV
     template <class fp_type>
     void SparseMatrix_CSR<fp_type>::matvec(fp_type *vecin, fp_type *vecout)
     {
-        // Previous Fortran Implementation:
-        // DO rownum = 1, numrows
-        ////DO idx = rowPtrs(rownum),(rowPtrs(rownum+1)-1)
-        //////rhsvec(rownum) = rhsvec(rownum) + values(idx)*lhsvec(colIdx(idx))
-        ////END DO
-        // END DO
+	// Check that the matrix is assembled:
+        if(this->_state != assembled) {
+            throw std::runtime_error("Matrix must be assembled before matvec can be performed");
+        }
 
-        // C++ Implementation:
+        // Perform the matvec operations:
         for (size_t rownum = 0; rownum < this->_nrows + 1; rownum++)
         {
             for (size_t idx = this->rowPtrs[rownum]; idx < rowPtrs[rownum + 1]; idx++)

@@ -19,6 +19,13 @@ namespace SpMV
     public:
         SparseMatrix_ELL(const int nrows, const int ncols);
         ~SparseMatrix_ELL();
+	size_t *getColIdxPtr(){
+		this->colIdx;
+	}
+	fp_type *getValPtr(){
+		this->val
+	}
+
         void setCoefficient(const size_t row, const size_t col, const fp_type aij){
 		this -> setCoefficient(row, col, aij);
 	}

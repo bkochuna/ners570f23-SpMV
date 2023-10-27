@@ -3,6 +3,7 @@
 #include<iostream>
 #include<stdexcept>
 #include <algorithm>
+#include <fstream> 
 
 namespace SpMV
 {
@@ -83,6 +84,27 @@ namespace SpMV
         }
     }
 
+    template <class fp_type>
+    void SparseMatrix_ELL<fp_type>::ELL_view(){
+
+        std::ofstream outputFile("ELL.matout");
+        if(!outputFile.is_open()){
+             std::cerr << "Unable to open the file for writing" << std::endl;
+             return;
+        }
+        outputFile << "Row           Col            Val" << std::endl;
+        fp_type value = 0;
+        for (size_t i = 0; i < this->_nrows; i++){
+             for (size_t j = 0; j < this->_ncols; j++){
+                  value = this->getCoefficient(i,j);
+                  int check  = static_cast<int>(value);
+                  if (check !=0){
+                  outputFile << i << "   " << j << "    " << value << std::endl;
+                  }
+              }
+        }
+        outputFile.close();
+    }
 
 
     template class SparseMatrix_ELL<float>;

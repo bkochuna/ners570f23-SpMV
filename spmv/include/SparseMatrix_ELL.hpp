@@ -3,7 +3,7 @@
 #include "SparseMatrix.hpp"
 #include <string>
 
-namespace SpMV
+namespace SpMV 
 {
     template <class fp_type>
     class SparseMatrix_ELL : public SparseMatrix<fp_type>
@@ -19,10 +19,8 @@ namespace SpMV
 
     public:
         SparseMatrix_ELL(const int nrows, const int ncols);
-        void assembleStorage() {};
-        [[gnu::pure]] size_t getNumRows(); //Returns the number of rows
-	    [[gnu::pure]] size_t getNumCols(); //Returns the number of columns
-        fp_type getCoefficient(size_t i,size_t j);
+        void assembleStorage() ;
+        fp_type operator()(size_t i,size_t j);
         std::string getFormat() const { return _format; };
         void ELL_view(); 
     

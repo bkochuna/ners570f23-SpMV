@@ -11,18 +11,37 @@ namespace SpMV
          SparseMatrix<fp_type>::SparseMatrix(nrows, ncols)
     {
         std::cout << "Hello from SparseMatrix_ELL Constructor!" << std::endl;
-        this->colIdx = new size_t[this->_nrowsmax*this->_nrows];
-        this->val = new fp_type[this->_nrowsmax*this->_nrows];
-        for (size_t i = 0; i < this->_nrowsmax*this->_nrows; i++)
-        {
-            colIdx[i]=-1; // -1 corresponds to the zero entries
-            val[i]=-1;
-        }  
+
         
     }
 
     template <class fp_type>
-    fp_type SparseMatrix_ELL<fp_type>::getCoefficient(const size_t row,const size_t col){
+    void SparseMatrix_ELL<fp_type>::assembleStorage(){
+        this->_nrowsmax = this->getLongestRow();
+        this->colIdx = new size_t[this->_nrowsmax*this->_nrows];
+        this->val = new fp_type[this->_nrowsmax*this->_nrows];
+        for (size_t i = 0; i < this->_nrowsmax*this->_nrows; i++)
+        {
+            colIdx[i]=0; // -1 corresponds to the zero entries
+            val[i]=0;
+        }
+        size_t count=0;
+        for (size_t i=0; i<this->_nrows;i++){
+            for (auto const &ent1:this->_buildCoeff){
+                if (i==ent1.first.first){
+                    size_t col_start_pos = this->_nrows*count;
+                    colIdx[col_start_pos+i]=ent1.first.second;
+                    val[col_start_pos+i]=ent1.second;
+                    count++;
+                }
+            }
+            count=0;
+
+        }
+        this->_state=assembled;
+    }
+    template <class fp_type>
+    fp_type SparseMatrix_ELL<fp_type>::operator()(const size_t row,const size_t col){
         // This function gets a matrix coefficient value given the row and 
         // column indices. It does this by accessing the sparse storage format.
         // Thus, the sparse storage format must be built in order for this 
@@ -50,12 +69,18 @@ namespace SpMV
         // https://stackoverflow.com/questions/26281979/c-loop-through-map
         // https://cplusplus.com/reference/utility/pair/pair/
 
-        size_t * rowLengths = new size_t(this->_nrows);
+        size_t * rowLengths = new size_t[this->_nrows];
+
+        for (size_t i=0; i<this->_nrows; i++){
+            rowLengths[i]=0;
+        }
+
         for (auto const &ent1:this->_buildCoeff){
             size_t rowidx= ent1.first.first; //should be the rowidx for jth entry
             rowLengths[rowidx]++;
         }
         std::sort(rowLengths,rowLengths+this->_nrows);
+        delete [] rowLengths;
         return rowLengths[this->_nrows-1];
     }
 
@@ -75,21 +100,6 @@ namespace SpMV
     //         }
     //     outputFile.close();
     // }
-
-    template <class fp_type> 
-    [[gnu::pure]] size_t SparseMatrix_ELL<fp_type>::getNumRows()
-    {
-	    size_t nrows = this->_nrows;
-	    return nrows;
-    }
-
-    //Returns the number of columns for a DEN format matrix
-    template <class fp_type>
-    [[gnu::pure]] size_t SparseMatrix_ELL<fp_type>::getNumCols()
-    {
-            size_t ncols = this->_ncols;
-            return ncols;
-    }
     template class SparseMatrix_ELL<float>;
     template class SparseMatrix_ELL<double>;
 }

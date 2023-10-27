@@ -76,6 +76,20 @@ namespace SpMV
     //     outputFile.close();
     // }
 
+    template <class fp_type> 
+    [[gnu::pure]] size_t SparseMatrix_ELL<fp_type>::getNumRows()
+    {
+	    size_t nrows = this->_nrows;
+	    return nrows;
+    }
+
+    //Returns the number of columns for a DEN format matrix
+    template <class fp_type>
+    [[gnu::pure]] size_t SparseMatrix_ELL<fp_type>::getNumCols()
+    {
+            size_t ncols = this->_ncols;
+            return ncols;
+    }
     template class SparseMatrix_ELL<float>;
     template class SparseMatrix_ELL<double>;
 }

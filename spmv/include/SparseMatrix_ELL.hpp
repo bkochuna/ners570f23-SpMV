@@ -20,6 +20,8 @@ namespace SpMV
     public:
         SparseMatrix_ELL(const int nrows, const int ncols);
         void assembleStorage() {};
+        [[gnu::pure]] size_t getNumRows(); //Returns the number of rows
+	    [[gnu::pure]] size_t getNumCols(); //Returns the number of columns
         fp_type getCoefficient(size_t i,size_t j);
         std::string getFormat() const { return _format; };
         void ELL_view(); 

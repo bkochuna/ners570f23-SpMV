@@ -293,7 +293,7 @@ namespace SpMV
 
 
 
-    template <class fp_type>
+    template <class fp_type>:
     void SparseMatrix_DEN<fp_type>:: matvec(fp_type* vecin, fp_type* vecout)
 
     {

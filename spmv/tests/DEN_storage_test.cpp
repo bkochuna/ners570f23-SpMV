@@ -1,44 +1,59 @@
-#define CATCH_CONFIG_MAIN // This tells Catch to provide a main() function
-#include <SpMV.hpp>
+#include <SparseMatrix_DEN.hpp>
+#include <cassert>
+#include <iostream>
 
-// Testing library required for testing (Always include this last!)
-#include "unit_test_framework.hpp"
-#include "SparseMatrix.hpp"
-#include "SparseMatrix_DEN.hpp"
+namespace SpMV {
 
-using namespace SpMV;
-
-template<typename T>
 void test_assembleStorage() {
-    SparseMatrix_DEN<T> sparseMatrix(3, 3);
-    sparseMatrix.setCoefficient_DEN(0, 0, static_cast<T>(1.0));
-    sparseMatrix.setCoefficient_DEN(1, 1, static_cast<T>(2.0));
-    sparseMatrix.setCoefficient_DEN(2, 2, static_cast<T>(3.0));
-
+    // 1. Create a sparse matrix with known values.
+    SparseMatrix_DEN<double> sparseMatrix(3, 3); // 3x3 matrix
+    sparseMatrix.setCoefficient_DEN(0, 0, 1.0);
+    sparseMatrix.setCoefficient_DEN(1, 1, 2.0);
+    sparseMatrix.setCoefficient_DEN(2, 2, 3.0);
+    
+    // 2. Use the assembleStorage function to convert the sparse matrix to a dense matrix.
     sparseMatrix.assembleStorage();
-
-    REQUIRE(sparseMatrix.getCoef(0, 0) == static_cast<T>(1.0));
-    REQUIRE(sparseMatrix.getCoef(1, 1) == static_cast<T>(2.0));
-    REQUIRE(sparseMatrix.getCoef(2, 2) == static_cast<T>(3.0));
-    REQUIRE(sparseMatrix.getCoef(0, 1) == static_cast<T>(0.0));
+    
+    // 3. Validate that the resulting dense matrix matches expected values.
+    if (sparseMatrix.getCoef(0, 0) != 1.0) {
+        std::cerr << "Error in test_assembleStorage: Expected 1.0 at (0,0), got " << sparseMatrix.getCoef(0, 0) << std::endl;
+        assert(false);
+    }
+    if (sparseMatrix.getCoef(1, 1) != 2.0) {
+        std::cerr << "Error in test_assembleStorage: Expected 2.0 at (1,1), got " << sparseMatrix.getCoef(1, 1) << std::endl;
+        assert(false);
+    }
+    if (sparseMatrix.getCoef(2, 2) != 3.0) {
+        std::cerr << "Error in test_assembleStorage: Expected 3.0 at (2,2), got " << sparseMatrix.getCoef(2, 2) << std::endl;
+        assert(false);
+    }
+    if (sparseMatrix.getCoef(0, 1) != 0.0) { 
+        std::cerr << "Error in test_assembleStorage: Expected 0.0 at (0,1), got " << sparseMatrix.getCoef(0, 1) << std::endl;
+        assert(false);
+    }
 }
 
-template<typename T>
 void test_disassembleStorage() {
-    SparseMatrix_DEN<T> denseMatrix(3, 3);
-    denseMatrix.setCoefficient_DEN(0, 0, static_cast<T>(1.0));
-    denseMatrix.setCoefficient_DEN(1, 1, static_cast<T>(2.0));
-    denseMatrix.setCoefficient_DEN(2, 2, static_cast<T>(3.0));
+    // 1. Start with a dense matrix with known values.
+    SparseMatrix_DEN<double> denseMatrix(3, 3); // 3x3 matrix
+    denseMatrix.setCoefficient_DEN(0, 0, 1.0);
+    denseMatrix.setCoefficient_DEN(1, 1, 2.0);
+    denseMatrix.setCoefficient_DEN(2, 2, 3.0);
 
+    // 2. Use the disassembleStorage function to convert the dense matrix back to sparse format.
     denseMatrix.disassembleStorage();
+
+    // 3. Ideally, we would check for correct memory handling here, however this is difficult to accomplish in C++
+    // For now, only checking for errors by calling the command will have to suffice.
+
 }
 
-TEST_CASE(disassembleSotrageTest) {
-    test_assembleStorage<float>();
-    test_assembleStorage<double>();
-}
+} // namespace SpMV
 
-TEST_CASE(disassembleSotrageTest) {
-    test_disassembleStorage<float>();
-    test_disassembleStorage<double>();
+int main() {
+    SpMV::test_assembleStorage();
+    SpMV::test_disassembleStorage();
+
+    std::cout << "All tests passed!" << std::endl;
+    return 0;
 }

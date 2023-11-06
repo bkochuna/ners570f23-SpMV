@@ -12,6 +12,7 @@ int main()
   cout << "Hello World!" << endl;
 
   SpMV::SparseMatrix<float>* ptr_A = new SpMV::SparseMatrix_COO<float>(1,5);
+  SpMV::SparseMatrix<double>* ptr_b = new SpMV::SparseMatrix_CSR<double>(5,5);
   
   // New scoping unit. This means variables defined in here, stay here.
   {
@@ -22,6 +23,7 @@ int main()
   ptr_A->setCoefficient(0,3,4.0);
 
   delete(ptr_A);
+  delete(ptr_b);
 
   return 0;
 }

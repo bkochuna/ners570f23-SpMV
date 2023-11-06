@@ -10,9 +10,16 @@ using namespace std;
 int main()
 {
   cout << "Hello World!" << endl;
+  cout << "UDF=" << SpMV::UDF << endl;
+  cout << "DEN=" << SpMV::DEN << endl;
+  cout << "COO=" << SpMV::COO << endl;
+  cout << "CSR=" << SpMV::CSR << endl;
 
   SpMV::SparseMatrix<float>* ptr_A = new SpMV::SparseMatrix_COO<float>(1,5);
   SpMV::SparseMatrix<double>* ptr_b = new SpMV::SparseMatrix_CSR<double>(5,5);
+
+  cout << "ptr_A is format=" << ptr_A->getFormat() << endl;
+  cout << "ptr_b is format=" << ptr_b->getFormat() << endl;
   
   // New scoping unit. This means variables defined in here, stay here.
   {

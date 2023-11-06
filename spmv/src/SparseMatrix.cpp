@@ -6,8 +6,8 @@ namespace SpMV
 {
     
     template <class fp_type>
-    SparseMatrix<fp_type>::SparseMatrix(const int nrows, const int ncols) :
-        _nrows(nrows), _ncols(ncols)
+    SparseMatrix<fp_type>::SparseMatrix(const int nrows, const int ncols, const MatrixFormat fmt) :
+        _nrows(nrows), _ncols(ncols), _fmt(fmt)
     {
         assert(this->_state == undefined);
         std::cout << "Hello from SparseMatrix Constructor!" << std::endl;

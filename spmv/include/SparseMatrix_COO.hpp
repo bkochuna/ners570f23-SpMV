@@ -13,6 +13,8 @@ namespace SpMV
         size_t *J    = nullptr;
         fp_type *val = nullptr;
 
+        void _disassembleStorage() {};
+
     public:
         SparseMatrix_COO(const int nrows, const int ncols);
         void assembleStorage() {};

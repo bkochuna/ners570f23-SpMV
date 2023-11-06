@@ -10,7 +10,8 @@
 namespace SpMV
 {
     // Enumerations for matrix state to support Builder Pattern
-    enum MatrixState { undefined, initialized, building, assembled };
+    enum MatrixState  { undefined, initialized, building, assembled };
+    enum MatrixFormat { UDF, DEN, COO, CSR, ELL, JDS };
 
     template <class fp_type>
     class SparseMatrix
@@ -20,18 +21,22 @@ namespace SpMV
         size_t _ncols = 0;
         size_t _nnz   = 0;
 
-        MatrixState _state = undefined;
+              MatrixState  _state = undefined;
+        const MatrixFormat _fmt;
 
         std::map<std::pair<size_t, size_t>, fp_type> _buildCoeff;
 
+        virtual void _disassembleStorage() =0;
+
     public:
-        SparseMatrix(const int nrows, const int ncols);
+        SparseMatrix(const int nrows, const int ncols, const MatrixFormat);
         virtual ~SparseMatrix();
 
-        inline size_t      getNumRows()     const { return _nrows; };
-        inline size_t      getNumCols()     const { return _ncols; };
-        inline size_t      getNumNonZeros() const { return _nnz;   };
-        inline MatrixState getState()       const { return _state; };
+        inline size_t       getNumRows()     const { return _nrows; };
+        inline size_t       getNumCols()     const { return _ncols; };
+        inline size_t       getNumNonZeros() const { return _nnz;   };
+        inline MatrixState  getState()       const { return _state; };
+        inline MatrixFormat getFormat()      const { return _fmt;   };
 
         void setCoefficient(const size_t row, const size_t col, const fp_type aij);
         virtual void assembleStorage() =0;

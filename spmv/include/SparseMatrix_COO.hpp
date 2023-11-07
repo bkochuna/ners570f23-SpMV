@@ -9,16 +9,18 @@ namespace SpMV
     class SparseMatrix_COO : public SparseMatrix<fp_type>
     {
     private:
-        size_t *I    = nullptr;
-        size_t *J    = nullptr;
-        fp_type *val = nullptr;
+        size_t  *_i = nullptr;
+        size_t  *_j = nullptr;
+        fp_type *_a = nullptr;
 
-        void _disassembleStorage() {};
+        void _disassembleStorage();
 
     public:
         SparseMatrix_COO(const int nrows, const int ncols);
-        void assembleStorage() {};
-        void matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y) {};
+        fp_type getCoefficient(const size_t row, const size_t col);
+           void view();
+           void assembleStorage();
+           void matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y);
     };
 }
 

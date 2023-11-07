@@ -29,7 +29,7 @@ namespace SpMV
         virtual void _disassembleStorage() =0;
 
     public:
-        SparseMatrix(const int nrows, const int ncols, const MatrixFormat);
+        SparseMatrix(const size_t nrows, const size_t ncols, const MatrixFormat);
         virtual ~SparseMatrix();
 
         inline size_t       getNumRows()     const { return _nrows; };

@@ -16,7 +16,7 @@ namespace SpMV
         void _disassembleStorage() {};
 
     public:
-        SparseMatrix_CSR(const int nrows, const int ncols);
+        SparseMatrix_CSR(const size_t nrows, const size_t ncols);
         void assembleStorage() {};
         void matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y) {};
     };

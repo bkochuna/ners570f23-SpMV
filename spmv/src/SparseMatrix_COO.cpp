@@ -6,7 +6,7 @@
 namespace SpMV
 {
     template <class fp_type>
-    SparseMatrix_COO<fp_type>::SparseMatrix_COO(const int nrows, const int ncols) :
+    SparseMatrix_COO<fp_type>::SparseMatrix_COO(const size_t nrows, const size_t ncols) :
          SparseMatrix<fp_type>::SparseMatrix(nrows, ncols, COO)
     {
         assert(this->_fmt == COO);

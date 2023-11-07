@@ -17,6 +17,7 @@ namespace SpMV
 
     public:
         SparseMatrix_COO(const int nrows, const int ncols);
+        SparseMatrix_COO(const int nrows, const int ncols, const size_t nnz, size_t* rows, size_t* cols, fp_type* vals);
         fp_type getCoefficient(const size_t row, const size_t col);
            void view();
            void assembleStorage();

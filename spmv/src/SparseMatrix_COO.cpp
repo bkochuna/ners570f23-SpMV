@@ -39,6 +39,26 @@ namespace SpMV
         assert(this->_a == vals);
     }
 
+
+    template <class fp_type>
+    SparseMatrix_COO<fp_type>::~SparseMatrix_COO()
+    {
+        if(this->_state == assembled)
+        {
+            delete this->_i;
+            delete this->_j;
+            delete this->_a;
+        }
+
+        if(!this->_buildCoeff.empty())
+            this->_buildCoeff.clear();
+
+        assert(this->_buildCoeff.empty());
+        assert(this->_i == nullptr);
+        assert(this->_j == nullptr);
+        assert(this->_a == nullptr);
+    }
+
     template <class fp_type>
     fp_type SparseMatrix_COO<fp_type>::getCoefficient(const size_t row, const size_t col)
     {

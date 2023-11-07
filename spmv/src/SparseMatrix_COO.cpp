@@ -10,7 +10,7 @@ namespace SpMV
          SparseMatrix<fp_type>::SparseMatrix(nrows, ncols, COO) {}
 
     template <class fp_type>
-    SparseMatrix_COO<fp_type>::SparseMatrix_COO(const int nrows, const int ncols, const size_t nnz, size_t* rows, size_t* cols, fp_type* vals) :
+    SparseMatrix_COO<fp_type>::SparseMatrix_COO(const size_t nrows, const size_t ncols, const size_t nnz, size_t* rows, size_t* cols, fp_type* vals) :
         SparseMatrix<fp_type>::SparseMatrix(nrows, ncols, COO), _i(rows), _j(cols), _a(vals)
     {
         assert(nnz <= ncols*nrows);

@@ -7,14 +7,13 @@ namespace SpMV
     
     template <class fp_type>
     SparseMatrix<fp_type>::SparseMatrix(const int nrows, const int ncols, const MatrixFormat fmt) :
-        _nrows(nrows), _ncols(ncols), _fmt(fmt)
+        _nrows(nrows), _ncols(ncols), _fmt(fmt), _state(initialized)
     {
         assert(this->_state == undefined);
-        std::cout << "Hello from SparseMatrix Constructor!" << std::endl;
-        std::cout << "Size is (nrows,ncols) = (" 
-            << this->_nrows << "," << this->_ncols << ")" << std::endl;
-        this->_state = initialized;
         assert(this->_state == initialized);
+        assert(this->_ncols == ncols);
+        assert(this->_nrows == nrows);
+        assert(this->_fmt != UDF);
     }
 
     template <class fp_type>

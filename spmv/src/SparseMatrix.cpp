@@ -41,6 +41,18 @@ namespace SpMV
         assert(this->_state == building);
     }
 
+    template <class fp_type>
+    fp_type SparseMatrix<fp_type>::getCoefficient(const size_t row, const size_t col)
+    {
+        return 0.0;
+    }
+
+    template <class fp_type>
+    void SparseMatrix<fp_type>::view()
+    {
+        std::cout << "View!" << std::endl;
+    }
+
     template class SparseMatrix<float>;
     template class SparseMatrix<double>;
 }

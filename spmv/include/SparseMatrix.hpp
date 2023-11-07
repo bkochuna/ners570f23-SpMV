@@ -38,8 +38,11 @@ namespace SpMV
         inline MatrixState  getState()       const { return _state; };
         inline MatrixFormat getFormat()      const { return _fmt;   };
 
-        void setCoefficient(const size_t row, const size_t col, const fp_type aij);
-        virtual void assembleStorage() =0;
+                   void setCoefficient(const size_t row, const size_t col, const fp_type aij);
+        virtual fp_type getCoefficient(const size_t row, const size_t col);
+        virtual    void view();
+        virtual    void assembleStorage() =0;
+        virtual    void matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y) =0;
     };
 
 }

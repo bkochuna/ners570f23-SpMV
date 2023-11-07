@@ -18,6 +18,7 @@ namespace SpMV
     public:
         SparseMatrix_CSR(const int nrows, const int ncols);
         void assembleStorage() {};
+        void matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y) {};
     };
 }
 

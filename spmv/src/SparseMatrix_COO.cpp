@@ -95,9 +95,9 @@ namespace SpMV
         // Convert this buildCoeff dictionary to i,j,a
 
         //allocate storage
-        this->_i =  (size_t *)malloc(this->_nnz * sizeof(size_t));
-        this->_j =  (size_t *)malloc(this->_nnz * sizeof(size_t));
-        this->_a = (fp_type *)malloc(this->_nnz * sizeof(fp_type));
+        this->_i =  static_cast<size_t *>(malloc(this->_nnz * sizeof(size_t)));
+        this->_j =  static_cast<size_t *>(malloc(this->_nnz * sizeof(size_t)));
+        this->_a =  static_cast<fp_type *>(malloc(this->_nnz * sizeof(fp_type)));
 
         //assign values
         size_t n = 0;
@@ -145,8 +145,10 @@ namespace SpMV
         assert(this->_ncols == nx);
 
         size_t i,j;
+        fp_type aij;
+
         for(size_t n=0; n<ny; n++)
-            y[n]=(fp_type)0.0;
+            y[n]=static_cast<fp_type>(0.0);
 
         for(size_t n=0; n<this->_nnz; n++)
         {

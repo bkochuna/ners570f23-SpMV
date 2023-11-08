@@ -5,6 +5,7 @@ string(CONCAT GNU_WARNING_FLAGS
     " -Wconversion"
     " -Wdouble-promotion"
     " -Wextra"
+    " -Werror"
     " -Wfloat-equal"
     " -Wimplicit-fallthrough"
     " -Wmissing-noreturn"
@@ -17,4 +18,3 @@ string(CONCAT GNU_WARNING_FLAGS
     " -Wzero-as-null-pointer-constant"
     " -pedantic"
     )
-# -Werror

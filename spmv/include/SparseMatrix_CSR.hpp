@@ -3,6 +3,9 @@
 
 #include "SparseMatrix.hpp"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 namespace SpMV
 {
     template <class fp_type>
@@ -15,7 +18,7 @@ namespace SpMV
 
            void _disassembleStorage() {};
            void _viewAssembled() {};
-        fp_type _getAssembledCoeff(const size_t row, const size_t col) {return (fp_type)0;};
+        fp_type _getAssembledCoeff(const size_t row, const size_t col) {return static_cast<fp_type>(0.0);};
 
     public:
         SparseMatrix_CSR(const size_t nrows, const size_t ncols);
@@ -23,5 +26,7 @@ namespace SpMV
         void matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y) {};
     };
 }
+
+#pragma GCC diagnostic pop
 
 #endif

@@ -13,8 +13,9 @@ namespace SpMV
         size_t  *_ja  = nullptr;
         fp_type *_aa  = nullptr;
 
-        void _disassembleStorage() {};
-        void _viewAssembled() {};
+           void _disassembleStorage() {};
+           void _viewAssembled() {};
+        fp_type _getAssembledCoeff(const size_t row, const size_t col) {return (fp_type)0;};
 
     public:
         SparseMatrix_CSR(const size_t nrows, const size_t ncols);

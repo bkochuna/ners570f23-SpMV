@@ -60,13 +60,19 @@ namespace SpMV
     }
 
     template <class fp_type>
-    fp_type SparseMatrix_COO<fp_type>::getCoefficient(const size_t row, const size_t col)
+    fp_type SparseMatrix_COO<fp_type>::_getAssembledCoeff(const size_t row, const size_t col)
     {
-        if(this->_state == assembled) {
-            return 1.0;
-        } else {
-            return SparseMatrix<fp_type>::getCoefficient(row,col);
+        fp_type aij = 0.0;
+
+        for(size_t n=0; n<this->_nnz; n++)
+        {
+            if(this->_i[n] == row && this->_j[n] == col) {
+                aij = this->_a[n];
+                break;
+            }
         }
+        
+        return aij;
     }
 
     template <class fp_type>

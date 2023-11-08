@@ -13,17 +13,17 @@ namespace SpMV
         size_t  *_j = nullptr;
         fp_type *_a = nullptr;
 
-        void _disassembleStorage();
-        void _viewAssembled();
+           void _disassembleStorage();
+           void _viewAssembled();
+        fp_type _getAssembledCoeff(const size_t row, const size_t col);
 
     public:
         SparseMatrix_COO(const size_t nrows, const size_t ncols);
         SparseMatrix_COO(const size_t nrows, const size_t ncols, const size_t nnz, size_t* rows, size_t* cols, fp_type* vals);
        ~SparseMatrix_COO();
         
-        fp_type getCoefficient(const size_t row, const size_t col);
-           void assembleStorage();
-           void matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y);
+        void assembleStorage();
+        void matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y);
     };
 }
 

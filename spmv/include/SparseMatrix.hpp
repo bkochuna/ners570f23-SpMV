@@ -21,13 +21,14 @@ namespace SpMV
         size_t _ncols = 0;
         size_t _nnz   = 0;
 
-              MatrixState  _state = undefined;
         const MatrixFormat _fmt;
+              MatrixState  _state = undefined;
 
         std::map<std::pair<size_t, size_t>, fp_type> _buildCoeff;
 
-        virtual void _disassembleStorage() =0;
-        virtual void _viewAssembled() =0;
+        virtual    void _disassembleStorage() =0;
+        virtual    void _viewAssembled() =0;
+        virtual fp_type _getAssembledCoeff(const size_t row, const size_t col) =0;
 
     public:
         SparseMatrix(const size_t nrows, const size_t ncols, const MatrixFormat);

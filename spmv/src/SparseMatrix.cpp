@@ -45,8 +45,11 @@ namespace SpMV
         
         fp_type aij = 0.0;
 
-        if(this->_state == building)
+        if(this->_state == building) {
             aij = this->_buildCoeff[std::make_pair(row,col)];
+        } else if(this->_state == assembled) {
+            aij = this->_getAssembledCoeff(row,col);
+        }
         
         return aij;
     }

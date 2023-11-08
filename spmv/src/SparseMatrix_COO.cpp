@@ -72,7 +72,12 @@ namespace SpMV
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::_viewAssembled()
     {
-
+        for(size_t n=0; n<this->_nnz; n++)
+        {
+            std::cout << this->_i[n] << " " <<
+                         this->_j[n] << " " <<
+                         this->_a[n] << std::endl;
+        }
     }
 
     template <class fp_type>
@@ -84,7 +89,7 @@ namespace SpMV
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::_disassembleStorage()
     {
-
+        
     }
 
     template <class fp_type>

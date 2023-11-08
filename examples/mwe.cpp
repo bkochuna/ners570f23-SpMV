@@ -27,7 +27,10 @@ int main()
     A.setCoefficient(1,1,1.0);
 
   }
+  cout << ptr_A->getCoefficient(0,3) << endl;
   ptr_A->setCoefficient(0,3,4.0);
+  cout << ptr_A->getCoefficient(0,3) << endl;
+  cout << ptr_A->getCoefficient(0,2) << endl;
 
   delete(ptr_A);
   delete(ptr_b);

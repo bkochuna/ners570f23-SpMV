@@ -9,7 +9,6 @@ namespace SpMV
     SparseMatrix<fp_type>::SparseMatrix(const size_t nrows, const size_t ncols, const MatrixFormat fmt) :
         _nrows(nrows), _ncols(ncols), _fmt(fmt), _state(initialized)
     {
-        assert(this->_state == undefined);
         assert(this->_state == initialized);
         assert(this->_ncols == ncols);
         assert(this->_nrows == nrows);
@@ -43,7 +42,15 @@ namespace SpMV
     template <class fp_type>
     fp_type SparseMatrix<fp_type>::getCoefficient(const size_t row, const size_t col)
     {
-        return 0.0;
+        assert(row < this->_nrows);
+        assert(col < this->_ncols);
+        
+        fp_type aij = 0.0;
+
+        if(this->_state == building)
+            aij = this->_buildCoeff[std::make_pair(row,col)];
+        
+        return aij;
     }
 
     template <class fp_type>

@@ -140,7 +140,22 @@ namespace SpMV
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y)
     {
+        assert(this->_state == assembled);
+        assert(this->_nrows == ny);
+        assert(this->_ncols == nx);
 
+        size_t i,j;
+        for(size_t n=0; n<ny; n++)
+            y[n]=(fp_type)0.0;
+
+        for(size_t n=0; n<this->_nnz; n++)
+        {
+            i    = this->_i[n];
+            j    = this->_j[n];
+            aij  = this->_a[n];
+
+            y[i]+= aij*x[j];
+        }
     }
 
 

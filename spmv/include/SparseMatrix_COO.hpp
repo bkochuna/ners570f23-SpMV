@@ -14,6 +14,7 @@ namespace SpMV
         fp_type *_a = nullptr;
 
         void _disassembleStorage();
+        void _viewAssembled();
 
     public:
         SparseMatrix_COO(const size_t nrows, const size_t ncols);
@@ -21,7 +22,6 @@ namespace SpMV
        ~SparseMatrix_COO();
         
         fp_type getCoefficient(const size_t row, const size_t col);
-           void view();
            void assembleStorage();
            void matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y);
     };

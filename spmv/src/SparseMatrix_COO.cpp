@@ -70,7 +70,7 @@ namespace SpMV
     }
 
     template <class fp_type>
-    void SparseMatrix_COO<fp_type>::view()
+    void SparseMatrix_COO<fp_type>::_viewAssembled()
     {
 
     }

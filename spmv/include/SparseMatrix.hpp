@@ -27,6 +27,7 @@ namespace SpMV
         std::map<std::pair<size_t, size_t>, fp_type> _buildCoeff;
 
         virtual void _disassembleStorage() =0;
+        virtual void _viewAssembled() =0;
 
     public:
         SparseMatrix(const size_t nrows, const size_t ncols, const MatrixFormat);

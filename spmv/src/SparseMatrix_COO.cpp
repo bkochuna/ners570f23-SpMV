@@ -102,10 +102,10 @@ namespace SpMV
         //assign values
         size_t n = 0;
         for (auto coeff : this->_buildCoeff) {
-        this->_i[n] = coeff.first.first;
-        this->_j[n] = coeff.first.second;
-        this->_a[n] = coeff.second;
-        n += 1;
+            this->_i[n] = coeff.first.first;
+            this->_j[n] = coeff.first.second;
+            this->_a[n] = coeff.second;
+            n += 1;
         }
 
         // Destroy _buildCoeff
@@ -118,7 +118,23 @@ namespace SpMV
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::_disassembleStorage()
     {
-        
+        assert(this->_state == assembled);
+
+
+        for(size_t n=0; n<this->_nnz; n++)
+            this->_buildCoeff[std::make_pair(this->_i[n],this->_j[n])] = this->_a[n];
+
+        delete this->_i;
+        delete this->_j;
+        delete this->_a;
+
+        this->_state = building;
+
+        assert(this->_i == nullptr);
+        assert(this->_j == nullptr);
+        assert(this->_a == nullptr);
+        assert(this->_buildCoeff.size() == this->_nnz);
+        assert(this->_state == building);
     }
 
     template <class fp_type>

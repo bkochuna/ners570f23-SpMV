@@ -28,6 +28,9 @@ namespace SpMV
         assert(col < this->_ncols);
         assert(row < this->_nrows);
 
+        if(this->_state == assembled)
+            this->_disassembleStorage();
+
         this->_state = building;
 
         //Store value

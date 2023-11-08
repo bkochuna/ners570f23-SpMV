@@ -71,7 +71,7 @@ namespace SpMV
                 break;
             }
         }
-        
+
         return aij;
     }
 
@@ -89,7 +89,30 @@ namespace SpMV
     template <class fp_type>
     void SparseMatrix_COO<fp_type>::assembleStorage()
     {
+        assert(this->_state == building);
+        assert(this->_nnz > 0);
 
+        // Convert this buildCoeff dictionary to i,j,a
+
+        //allocate storage
+        this->_i =  (size_t *)malloc(this->_nnz * sizeof(size_t));
+        this->_j =  (size_t *)malloc(this->_nnz * sizeof(size_t));
+        this->_a = (fp_type *)malloc(this->_nnz * sizeof(fp_type));
+
+        //assign values
+        size_t n = 0;
+        for (auto coeff : this->_buildCoeff) {
+        this->_i[n] = coeff.first.first;
+        this->_j[n] = coeff.first.second;
+        this->_a[n] = coeff.second;
+        n += 1;
+        }
+
+        // Destroy _buildCoeff
+        this->_buildCoeff.clear();
+
+        this->_state = assembled;
+        assert(this->_state == assembled);
     }
 
     template <class fp_type>

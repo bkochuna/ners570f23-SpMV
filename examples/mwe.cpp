@@ -36,6 +36,8 @@ int main()
     A.view();
     cout << endl;
     cout << A.getCoefficient(1,1) << endl;
+    A.setCoefficient(1,1,5.0);
+    cout << A.getCoefficient(1,1) << endl;
 
   }
   cout << ptr_A->getCoefficient(0,3) << endl;

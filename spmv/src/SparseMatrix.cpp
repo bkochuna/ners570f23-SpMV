@@ -18,7 +18,7 @@ namespace SpMV
     template <class fp_type>
     SparseMatrix<fp_type>::~SparseMatrix()
     {
-        std::cout << "Hello from SparseMatrix Destructor!" << std::endl;
+       // Nothing to see here
     }
 
     template <class fp_type>

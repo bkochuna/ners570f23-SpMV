@@ -141,8 +141,8 @@ namespace SpMV
     void SparseMatrix_COO<fp_type>::matVec(const size_t nx, const fp_type* x, const size_t ny, fp_type* y)
     {
         assert(this->_state == assembled);
-        assert(this->_nrows == ny);
-        assert(this->_ncols == nx);
+        assert(this->_nrows <= ny);
+        assert(this->_ncols <= nx);
 
         size_t i,j;
         fp_type aij;

@@ -17,6 +17,7 @@ using fp_type = __SPMV_FPTYPE__;
 #  error("__SPMV_FPTYPE__ must be defined!")
 #endif
 
+#include <csignal> // std::signal,SIGABRT
 #include <cstdio>  // printf
 #include <cstdlib> // std::abs, exit
 #include <iostream> // std::cout, std::endl
@@ -32,6 +33,14 @@ using fp_type = __SPMV_FPTYPE__;
 // 3. Use RUN_SUITE(suite_name) to run a test suite in the main function.
 //
 // Similar to the C++ testing framework Catch2, but much simpler.
+bool handler_set = false;
+void exit_on_abort(int s)
+{
+    if(s == SIGABRT) {
+      printf("Test case Expected Failure passed\n");
+      std::exit(s);
+    }
+}
 
 #define ASSERT(cond) assert(cond)
 
@@ -46,6 +55,8 @@ using fp_type = __SPMV_FPTYPE__;
 #define TEST_CASE(name) void name()
 
 #define TEST(name)                                                                       \
+  if(!handler_set) std::signal(SIGABRT,exit_on_abort);                                   \
+  handler_set = true;                                                                    \
   printf("Running test case '%s'\n", #name);                                             \
   name();                                                                                \
   printf("Test case '%s' passed\n", #name);

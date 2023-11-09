@@ -14,7 +14,7 @@ namespace SpMV
 
     template <class fp_type>
     SparseMatrix_COO<fp_type>::SparseMatrix_COO(const size_t nrows, const size_t ncols, const size_t nnz, size_t* rows, size_t* cols, fp_type* vals) :
-        SparseMatrix<fp_type>::SparseMatrix(nrows, ncols, COO), _i(rows), _j(cols), _a(vals)
+        SparseMatrix<fp_type>::SparseMatrix(nrows, ncols, COO)
     {
         assert(nnz <= ncols*nrows);
         assert(rows != nullptr);
@@ -29,14 +29,17 @@ namespace SpMV
         }
 #endif
 
+        this->_i.assign(rows,rows+nnz);
+        this->_j.assign(cols,cols+nnz);
+        this->_a.assign(vals,vals+nnz);
         this->_nnz   = nnz;
         this->_state = assembled;
 
         assert(this->_nnz == nnz);
         assert(this->_state == assembled);
-        assert(this->_i == rows);
-        assert(this->_j == cols);
-        assert(this->_a == vals);
+        assert(this->_i.size() == nnz);
+        assert(this->_j.size() == nnz);
+        assert(this->_a.size() == nnz);
     }
 
 
@@ -45,18 +48,18 @@ namespace SpMV
     {
         if(this->_state == assembled)
         {
-            delete this->_i;
-            delete this->_j;
-            delete this->_a;
+            this->_i.clear();
+            this->_j.clear();
+            this->_a.clear();
         }
 
         if(!this->_buildCoeff.empty())
             this->_buildCoeff.clear();
 
         assert(this->_buildCoeff.empty());
-        assert(this->_i == nullptr);
-        assert(this->_j == nullptr);
-        assert(this->_a == nullptr);
+        assert(this->_i.size() == 0);
+        assert(this->_j.size() == 0);
+        assert(this->_a.size() == 0);
     }
 
     template <class fp_type>
@@ -95,9 +98,9 @@ namespace SpMV
         // Convert this buildCoeff dictionary to i,j,a
 
         //allocate storage
-        this->_i =  static_cast<size_t *>(malloc(this->_nnz * sizeof(size_t)));
-        this->_j =  static_cast<size_t *>(malloc(this->_nnz * sizeof(size_t)));
-        this->_a =  static_cast<fp_type *>(malloc(this->_nnz * sizeof(fp_type)));
+        this->_i.resize(this->_nnz);
+        this->_j.resize(this->_nnz);
+        this->_a.resize(this->_nnz);
 
         //assign values
         size_t n = 0;
@@ -124,15 +127,15 @@ namespace SpMV
         for(size_t n=0; n<this->_nnz; n++)
             this->_buildCoeff[std::make_pair(this->_i[n],this->_j[n])] = this->_a[n];
 
-        delete this->_i;
-        delete this->_j;
-        delete this->_a;
+        this->_i.clear();
+        this->_j.clear();
+        this->_a.clear();
 
         this->_state = building;
 
-        assert(this->_i == nullptr);
-        assert(this->_j == nullptr);
-        assert(this->_a == nullptr);
+        assert(this->_i.size() == 0);
+        assert(this->_j.size() == 0);
+        assert(this->_a.size() == 0);
         assert(this->_buildCoeff.size() == this->_nnz);
         assert(this->_state == building);
     }

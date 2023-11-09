@@ -3,15 +3,17 @@
 
 #include "SparseMatrix.hpp"
 
+#include <vector>
+
 namespace SpMV
 {
     template <class fp_type>
     class SparseMatrix_COO : public SparseMatrix<fp_type>
     {
     private:
-        size_t  *_i = nullptr;
-        size_t  *_j = nullptr;
-        fp_type *_a = nullptr;
+        std::vector<size_t> _i;
+        std::vector<size_t> _j;
+        std::vector<fp_type>_a;
 
            void _disassembleStorage();
            void _viewAssembled();

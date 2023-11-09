@@ -14,6 +14,8 @@ int main()
   cout << "DEN=" << SpMV::DEN << endl;
   cout << "COO=" << SpMV::COO << endl;
   cout << "CSR=" << SpMV::CSR << endl;
+  cout << "undefined=" << SpMV::undefined << endl;
+
 
   SpMV::SparseMatrix<float>* ptr_A = new SpMV::SparseMatrix_COO<float>(1,5);
   SpMV::SparseMatrix<double>* ptr_b = new SpMV::SparseMatrix_CSR<double>(5,5);
@@ -24,7 +26,16 @@ int main()
   // New scoping unit. This means variables defined in here, stay here.
   {
     SpMV::SparseMatrix_COO<double> A = SpMV::SparseMatrix_COO<double>(2,2);
-    A.setCoefficient(1,1,1.0);
+    A.setCoefficient(0,0,1.0);
+    A.setCoefficient(0,1,2.0);
+    A.setCoefficient(1,0,3.0);
+    A.setCoefficient(1,1,4.0);
+    A.view();
+    cout << endl;
+    A.assembleStorage();
+    A.view();
+    cout << endl;
+    cout << A.getCoefficient(1,1) << endl;
 
   }
   cout << ptr_A->getCoefficient(0,3) << endl;
